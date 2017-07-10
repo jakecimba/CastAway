@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 import { PlayPauseButton } from './PlayPauseButton';
 
@@ -13,9 +14,30 @@ class EpisodeScreen extends React.Component {
   render () {
     const { episode } = this.props.navigation.state.params;
     let feedMp3 = episode.enclosure[0]["$"].url;
+    let imageLink = episode['itunes:image'][0]["$"].href;
     return (
-      <PlayPauseButton mp3={feedMp3}/>
+      <View style={styles.container} >
+        <Image
+          style={styles.image}
+          source={{uri: imageLink}}
+        />
+        <PlayPauseButton mp3={feedMp3}/>
+      </View>
     );
+  }
+}
+
+const styles = {
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20
+  },
+  image: {
+    width: 300,
+    height: 300
   }
 }
 
