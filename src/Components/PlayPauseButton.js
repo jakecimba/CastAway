@@ -23,7 +23,7 @@ class PlayPauseButton extends React.Component {
         <TouchableOpacity onPress={() => {
           if (!this.state.isMp3Playing) {
             ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
-            this.setState({isMp3Playing: true}); 
+            this.setState({isMp3Playing: true});
           } else {
             ReactNativeAudioStreaming.pause();
             this.setState({isMp3Playing: false});
