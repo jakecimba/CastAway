@@ -42,8 +42,8 @@ const styles = {
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 20
   },
   button1: {
     height: 65,
