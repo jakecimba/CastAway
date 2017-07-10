@@ -35,6 +35,8 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+jsconfig.json
+package-lock.json
 
 # BUCK
 buck-out/
@@ -51,3 +53,4 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
