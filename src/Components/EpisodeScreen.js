@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { PlayPauseButton } from './PlayPauseButton';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
+var striptags = require('striptags');
 
 class EpisodeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,7 +18,7 @@ class EpisodeScreen extends React.Component {
     let feedMp3 = episode.enclosure[0]["$"].url;
     let imageUrl = episode['itunes:image'][0]["$"].href;
     let description = String(episode.description);
-    description = description.replace("<p>", "").replace("</p>", "");
+    description = striptags(description, [] , "");
     
     return (
       <View style={styles.container} >

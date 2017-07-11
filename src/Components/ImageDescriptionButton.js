@@ -21,11 +21,7 @@ class ImageDescriptionButton extends React.Component {
     return (
       <View style={styles.button} >
         <TouchableOpacity onPress={() => {
-          if (!this.state.descriptionDisplayed) {
-            this.setState({descriptionDisplayed: true});
-          } else {
-            this.setState({descriptionDisplayed: false});
-          }
+            this.setState({descriptionDisplayed: !this.state.descriptionDisplayed});
         }}>
           <View>{buttonDisplay}</View>
         </TouchableOpacity>
