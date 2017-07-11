@@ -11,7 +11,8 @@
 		"react-native": "0.46.1",
 		"react-native-audio-streaming": "^2.3.2",
 		"react-native-xml2js": "^1.0.3",
-		"react-navigation": "^1.0.0-beta.11"
+		"react-navigation": "^1.0.0-beta.11",
+		"striptags": "^3.0.1"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",
