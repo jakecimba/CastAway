@@ -5,13 +5,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
-import { getProgress } from './GetProgress';
-
+var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
   state = {
     isMp3Playing: false,
-    progress: 0
+    mp3Progress: 0
   };
   
   render() {
@@ -20,20 +19,18 @@ class PlayPauseButton extends React.Component {
     let playableMp3 = secureMp3.replace("https", "http");
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
-    var progress;
 
-    ReactNativeAudioStreaming.getStatus((error, statusObject) => {
+    ReactNativeAudioStreaming.getStatus((error, mp3Status) => {
       if (error) {
         console.log(error)
       } else {
-        let progress = statusObject.progress
-        if (progress != this.state.progress) {
-          this.setState({progress: progress})
+        let prog = mp3Status.progress.toFixed(0);
+        if (prog != this.state.mp3Progress) {
+          this.setState({mp3Progress: prog})
         }
       }
-    })
+    });
 
-    console.log(this.state);
     return (
       <View style={styles.container} >
         <TouchableOpacity onPress={() => {
@@ -49,7 +46,7 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-          <Text>{this.state.progress}</Text>
+          <Text>{moment.utc(this.state.mp3Progress).format('H:mm:ss')}</Text>
       </View>
     )
   }
