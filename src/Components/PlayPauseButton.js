@@ -24,7 +24,8 @@ class PlayPauseButton extends React.Component {
       if (error) {
         console.log(error)
       } else {
-        let prog = mp3Status.progress.toFixed(0);
+        let progInMilli = (mp3Status.progress.toFixed(0))*1000;
+        let prog = moment(progInMilli).format('mm:ss');
         if (prog != this.state.mp3Progress) {
           this.setState({mp3Progress: prog})
         }
@@ -46,7 +47,7 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-          <Text>{moment.utc(this.state.mp3Progress).format('H:mm:ss')}</Text>
+          <Text>{this.state.mp3Progress}</Text>
       </View>
     )
   }
