@@ -12,23 +12,10 @@ class PlayPauseButton extends React.Component {
   state = {
     isMp3Playing: false
   };
-
-  constructor(props) {
-    super(props);
-    this.toggleStopwatch = this.toggleStopwatch.bind(this);
-    this.resetStopwatch = this.resetStopwatch.bind(this);
-  }
-
-  toggleStopwatch() {
-    this.setState({stopwatchStart: !this.state.stopwatchStart, stopwatchReset: false});
-  }
- 
-  resetStopwatch() {
-    this.setState({stopwatchStart: false, stopwatchReset: true});
-  }
   
   getFormattedTime(time) {
-    this.currentTime = time;
+    x = moment(time,"hh:mm:ss").format("m:ss"); 
+    this.currentTime = x;
   };
 
   render() {
@@ -54,7 +41,7 @@ class PlayPauseButton extends React.Component {
           </View>
         </TouchableOpacity>
         <Stopwatch options={styles.stopwatch}
-          start={this.state.isMp3Playing}
+          start={this.state.isMp3Playing} 
           getTime={this.getFormattedTime} />
       </View>
     )
