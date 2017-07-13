@@ -25,8 +25,8 @@ class EpisodeScreen extends React.Component {
 
     return (
       <View style={styles.container} >
-        <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} duration={dur} />
-        <PlayPauseButton mp3={feedMp3}/>
+        <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
+        <PlayPauseButton mp3={feedMp3} duration={dur} />
       </View>
     );
   }

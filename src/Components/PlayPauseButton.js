@@ -24,8 +24,7 @@ class PlayPauseButton extends React.Component {
       if (error) {
         console.log(error)
       } else {
-        let progInMilli = (mp3Status.progress.toFixed(0))*1000;
-        let prog = moment(progInMilli).format('mm:ss');
+        prog = moment(mp3Status.progress * 1000).format('m:ss');
         if (prog != this.state.mp3Progress) {
           this.setState({mp3Progress: prog})
         }
