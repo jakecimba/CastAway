@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 import { Stopwatch } from 'react-native-stopwatch-timer';
@@ -11,11 +11,6 @@ var moment = require('moment');
 class PlayPauseButton extends React.Component {
   state = {
     isMp3Playing: false
-  };
-  
-  getFormattedTime(time) {
-    x = moment(time,"hh:mm:ss").format("m:ss"); 
-    this.currentTime = x;
   };
 
   render() {
@@ -41,8 +36,7 @@ class PlayPauseButton extends React.Component {
           </View>
         </TouchableOpacity>
         <Stopwatch options={styles.stopwatch}
-          start={this.state.isMp3Playing} 
-          getTime={this.getFormattedTime} />
+          start={this.state.isMp3Playing} />
       </View>
     )
   }
