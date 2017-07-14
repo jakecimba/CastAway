@@ -2,17 +2,19 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+import { Stopwatch } from 'react-native-stopwatch-timer';
+var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
   state = {
-    isMp3Playing: false,
+    isMp3Playing: false
   };
 
   render() {
-
+    
     let secureMp3 = this.props.mp3;
     let playableMp3 = secureMp3.replace("https", "http");
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
@@ -33,12 +35,20 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
+        <Stopwatch options={styles.stopwatch}
+          start={this.state.isMp3Playing} />
       </View>
     )
   }
 }
 
 const styles = {
+  stopwatch: {
+    backgroundColor: 'clear',
+    padding: 5,
+    borderRadius: 5,
+    width: 220,
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
