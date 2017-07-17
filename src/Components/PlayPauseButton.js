@@ -43,6 +43,13 @@ class PlayPauseButton extends React.Component {
             ReactNativeAudioStreaming.pause();
             this.setState({isMp3Playing: false});
             clearInterval(this.timerID);
+            ReactNativeAudioStreaming.getStatus((error, info) => {
+              if (error) {
+                console.log(error);
+              } else {
+                this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+              }
+            });
           }
         }}>
           <View  style={buttonStyle}>
