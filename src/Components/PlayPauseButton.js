@@ -17,7 +17,12 @@ class PlayPauseButton extends React.Component {
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      } else {
+      }
+      else if (info.status == "PLAYING" && info.url == this.props.mp3) {
+        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss"), isMp3Playing: true});
+        this.timeStatus();
+      } 
+      else if (info.url == this.props.mp3) {
         this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
       }
     });
@@ -37,8 +42,7 @@ class PlayPauseButton extends React.Component {
   }
   
   render() {
-    let secureMp3 = this.props.mp3;
-    let playableMp3 = secureMp3.replace("https", "http");
+    let playableMp3 = this.props.mp3;
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
 

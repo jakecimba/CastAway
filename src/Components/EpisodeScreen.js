@@ -16,7 +16,7 @@ class EpisodeScreen extends React.Component {
 
   render () {
     const { episode } = this.props.navigation.state.params;
-    let feedMp3 = episode.enclosure[0]["$"].url;
+    let feedMp3 = episode.enclosure[0]["$"].url.replace("https", "http");
     let imageUrl = episode['itunes:image'][0]["$"].href;
     let description = String(episode.description);
     description = striptags(description, [] , "");
