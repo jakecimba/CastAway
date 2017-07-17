@@ -5,16 +5,38 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
-import { Stopwatch } from 'react-native-stopwatch-timer';
 var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
   state = {
-    isMp3Playing: false
+    isMp3Playing: false,
+    time: moment(0).format("m:ss"),
   };
 
+  componentDidMount() {
+    ReactNativeAudioStreaming.getStatus((error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+      }
+    });
+  }
+
+  timeStatus() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+  
+  tick() {
+    this.setState({
+      time: moment(this.state.time, "m:ss").add(1, "s").format("m:ss")
+    });
+  }
+  
   render() {
-    
     let secureMp3 = this.props.mp3;
     let playableMp3 = secureMp3.replace("https", "http");
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
@@ -26,17 +48,25 @@ class PlayPauseButton extends React.Component {
           if (!this.state.isMp3Playing) {
             ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
             this.setState({isMp3Playing: true});
+            this.timeStatus();
           } else {
             ReactNativeAudioStreaming.pause();
             this.setState({isMp3Playing: false});
+            clearInterval(this.timerID);
+            ReactNativeAudioStreaming.getStatus((error, info) => {
+              if (error) {
+                console.log(error);
+              } else {
+                this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+              }
+            });
           }
         }}>
           <View  style={buttonStyle}>
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <Stopwatch options={styles.stopwatch}
-          start={this.state.isMp3Playing} />
+        <Text>{this.state.time}</Text>
       </View>
     )
   }
