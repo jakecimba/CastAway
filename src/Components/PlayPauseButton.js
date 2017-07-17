@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+//import { ForwardBackward } from './ForwardBackward';
 var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
@@ -71,6 +72,28 @@ class PlayPauseButton extends React.Component {
           </View>
         </TouchableOpacity>
         <Text>{this.state.time}</Text>
+        <TouchableOpacity onPress={() => {
+          ReactNativeAudioStreaming.goForward(15);
+          this.setState({time: moment(this.state.time, "m:ss").add(15, "s").format("m:ss")});
+        }}>
+          <View style={styles.skip}>
+            <Text style={styles.skipText}>Forward 15</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          if ( this.state.time.replace(":","")-15 < 0 ) {
+            ReactNativeAudioStreaming.seekToTime(0);
+            this.setState({time: moment(0).format("m:ss")});
+          }
+          else {
+            ReactNativeAudioStreaming.goBack(15);
+            this.setState({time: moment(this.state.time, "m:ss").subtract(15, "s").format("m:ss")});
+          }
+        }}>
+          <View style={styles.skip}>
+            <Text style={styles.skipText}>Backward 15</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -107,6 +130,17 @@ const styles = {
     color: 'white',
     textAlign: 'center',
   },
+  skip: {
+    height: 20,
+    width: 100,
+    backgroundColor: '#2196F3'
+  },
+  skipText: {
+    padding: 5,
+    fontSize: 10,
+    color: 'white',
+    textAlign: 'center'
+  }
 }
 
 export { PlayPauseButton };
