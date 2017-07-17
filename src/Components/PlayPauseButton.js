@@ -13,6 +13,16 @@ class PlayPauseButton extends React.Component {
     time: moment(0).format("m:ss"),
   };
 
+  componentDidMount() {
+    ReactNativeAudioStreaming.getStatus((error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+      }
+    });
+  }
+
   timeStatus() {
     this.timerID = setInterval(
       () => this.tick(),
