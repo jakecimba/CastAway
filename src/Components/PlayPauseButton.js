@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
-//import { ForwardBackward } from './ForwardBackward';
 var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
@@ -71,29 +70,35 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <Text>{this.state.time}</Text>
         <TouchableOpacity onPress={() => {
-          ReactNativeAudioStreaming.goForward(15);
-          this.setState({time: moment(this.state.time, "m:ss").add(15, "s").format("m:ss")});
+          if ( moment.duration(moment(this.state.time, "m:ss").add(30, "s").format("m:ss")).asMinutes() >= this.props.duration ) {
+            ReactNativeAudioStreaming.seekToTime(this.props.duration);
+            clearInterval(this.timerID);
+            this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
+          } else {
+            ReactNativeAudioStreaming.goForward(30);
+            this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
+          }
         }}>
           <View style={styles.skip}>
-            <Text style={styles.skipText}>Forward 15</Text>
+            <Text style={styles.skipText}>Forward 30</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
-          if ( this.state.time.replace(":","")-15 < 0 ) {
+          if ( this.state.time.replace(":","")-30 < 0 ) {
             ReactNativeAudioStreaming.seekToTime(0);
             this.setState({time: moment(0).format("m:ss")});
           }
           else {
-            ReactNativeAudioStreaming.goBack(15);
-            this.setState({time: moment(this.state.time, "m:ss").subtract(15, "s").format("m:ss")});
+            ReactNativeAudioStreaming.goBack(30);
+            this.setState({time: moment(this.state.time, "m:ss").subtract(30, "s").format("m:ss")});
           }
         }}>
           <View style={styles.skip}>
-            <Text style={styles.skipText}>Backward 15</Text>
+            <Text style={styles.skipText}>Backward 30</Text>
           </View>
         </TouchableOpacity>
+        <Text>{this.state.time}</Text>
       </View>
     )
   }
@@ -133,7 +138,8 @@ const styles = {
   skip: {
     height: 20,
     width: 100,
-    backgroundColor: '#2196F3'
+    backgroundColor: '#2196F3',
+    marginBottom: 2
   },
   skipText: {
     padding: 5,
