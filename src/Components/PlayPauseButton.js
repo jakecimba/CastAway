@@ -88,9 +88,17 @@ class PlayPauseButton extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             if ( moment.duration(moment(this.state.time, "m:ss").add(30, "s").format("m:ss")).asMinutes() >= this.props.duration ) {
-              ReactNativeAudioStreaming.seekToTime(this.props.duration);
+              ReactNativeAudioStreaming.seekToTime(0);
+              ReactNativeAudioStreaming.pause();
               clearInterval(this.timerID);
               this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
+            }
+            else if (this.state.time == "0:00") {
+              console.log("TEST");
+              ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
+              ReactNativeAudioStreaming.pause();
+              ReactNativeAudioStreaming.seekToTime(30);
+              this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
             } else {
               ReactNativeAudioStreaming.goForward(30);
               this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
