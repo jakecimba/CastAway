@@ -70,35 +70,37 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          if ( moment.duration(moment(this.state.time, "m:ss").add(30, "s").format("m:ss")).asMinutes() >= this.props.duration ) {
-            ReactNativeAudioStreaming.seekToTime(this.props.duration);
-            clearInterval(this.timerID);
-            this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
-          } else {
-            ReactNativeAudioStreaming.goForward(30);
-            this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
-          }
-        }}>
-          <View style={styles.skip}>
-            <Text style={styles.skipText}>Forward 30</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          if ( this.state.time.replace(":","")-30 < 0 ) {
-            ReactNativeAudioStreaming.seekToTime(0);
-            this.setState({time: moment(0).format("m:ss")});
-          }
-          else {
-            ReactNativeAudioStreaming.goBack(30);
-            this.setState({time: moment(this.state.time, "m:ss").subtract(30, "s").format("m:ss")});
-          }
-        }}>
-          <View style={styles.skip}>
-            <Text style={styles.skipText}>Backward 30</Text>
-          </View>
-        </TouchableOpacity>
         <Text>{this.state.time}</Text>
+        <View style={styles.skipContainer}>
+          <TouchableOpacity onPress={() => {
+            if ( this.state.time.replace(":","")-30 < 0 ) {
+              ReactNativeAudioStreaming.seekToTime(0);
+              this.setState({time: moment(0).format("m:ss")});
+            }
+            else {
+              ReactNativeAudioStreaming.goBack(30);
+              this.setState({time: moment(this.state.time, "m:ss").subtract(30, "s").format("m:ss")});
+            }
+          }}>
+            <View style={styles.skip}>
+              <Text style={styles.skipText}>Backward 30</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            if ( moment.duration(moment(this.state.time, "m:ss").add(30, "s").format("m:ss")).asMinutes() >= this.props.duration ) {
+              ReactNativeAudioStreaming.seekToTime(this.props.duration);
+              clearInterval(this.timerID);
+              this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
+            } else {
+              ReactNativeAudioStreaming.goForward(30);
+              this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
+            }
+          }}>
+            <View style={styles.skip}>
+              <Text style={styles.skipText}>Forward 30</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -134,6 +136,11 @@ const styles = {
     fontSize: 25,
     color: 'white',
     textAlign: 'center',
+  },
+  skipContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10
   },
   skip: {
     height: 20,
