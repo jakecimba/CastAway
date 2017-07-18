@@ -17,12 +17,10 @@ class PlayPauseButton extends React.Component {
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      }
-      else if (info.status == "PLAYING" && info.url == this.props.mp3) {
+      } else if (info.status == "PLAYING" && info.url == this.props.mp3) {
         this.setState({time: parseInt(info.progress.toFixed(0)), isMp3Playing: true});
         this.timeStatus();
-      } 
-      else if (info.url == this.props.mp3) {
+      } else if (info.url == this.props.mp3) {
         this.setState({time: parseInt(info.progress.toFixed(0))});
       }
     });
@@ -110,8 +108,7 @@ class PlayPauseButton extends React.Component {
           <TouchableOpacity onPress={() => {
             if ( this.state.time - skipTime < 0 ) {
               this.reset();
-            }
-            else {
+            } else {
               this.skipBack(skipTime);
             }
           }}>
@@ -122,8 +119,7 @@ class PlayPauseButton extends React.Component {
           <TouchableOpacity onPress={() => {
             if ( this.state.time >= this.props.duration ) {
               this.end();
-            }
-            else if (this.state.time == 0) {
+            } else if (this.state.time == 0) {
               this.seekAudio(skipTime);
               this.addTime(skipTime);
             } else {
