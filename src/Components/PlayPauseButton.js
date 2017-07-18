@@ -40,9 +40,54 @@ class PlayPauseButton extends React.Component {
       time: moment(this.state.time, "m:ss").add(1, "s").format("m:ss")
     });
   }
+
+  addThirtySeconds() {
+    this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
+  }
+
+  seekAudioToThirtySeconds() {
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
+    ReactNativeAudioStreaming.pause();
+    ReactNativeAudioStreaming.seekToTime(30);
+  }
   
+  endAudioAndResetTime() {
+    ReactNativeAudioStreaming.seekToTime(0);
+    ReactNativeAudioStreaming.pause();
+    clearInterval(this.timerID);
+    this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
+  }
+
+  skipBackwardThirtySeconds() {
+    ReactNativeAudioStreaming.goBack(30);
+    this.setState({time: moment(this.state.time, "m:ss").subtract(30, "s").format("m:ss")});
+  }
+
+  skipBackToZero() {
+    ReactNativeAudioStreaming.seekToTime(0);
+    this.setState({time: moment(0).format("m:ss")});
+  }
+
+  resumeMp3() {
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
+    this.setState({isMp3Playing: true});
+    this.timeStatus();
+  }
+
+  pauseMp3() {
+    ReactNativeAudioStreaming.pause();
+    this.setState({isMp3Playing: false});
+    clearInterval(this.timerID);
+    ReactNativeAudioStreaming.getStatus((error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+      }
+    });
+  }
+
   render() {
-    let playableMp3 = this.props.mp3;
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
 
@@ -50,20 +95,9 @@ class PlayPauseButton extends React.Component {
       <View style={styles.container} >
         <TouchableOpacity onPress={() => {
           if (!this.state.isMp3Playing) {
-            ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
-            this.setState({isMp3Playing: true});
-            this.timeStatus();
+            this.resumeMp3();
           } else {
-            ReactNativeAudioStreaming.pause();
-            this.setState({isMp3Playing: false});
-            clearInterval(this.timerID);
-            ReactNativeAudioStreaming.getStatus((error, info) => {
-              if (error) {
-                console.log(error);
-              } else {
-                this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
-              }
-            });
+            this.pauseMp3();
           }
         }}>
           <View  style={buttonStyle}>
@@ -74,12 +108,10 @@ class PlayPauseButton extends React.Component {
         <View style={styles.skipContainer}>
           <TouchableOpacity onPress={() => {
             if ( this.state.time.replace(":","")-30 < 0 ) {
-              ReactNativeAudioStreaming.seekToTime(0);
-              this.setState({time: moment(0).format("m:ss")});
+              this.skipBackToZero();
             }
             else {
-              ReactNativeAudioStreaming.goBack(30);
-              this.setState({time: moment(this.state.time, "m:ss").subtract(30, "s").format("m:ss")});
+              this.skipBackwardThirtySeconds();
             }
           }}>
             <View style={styles.skip}>
@@ -88,20 +120,14 @@ class PlayPauseButton extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             if ( moment.duration(moment(this.state.time, "m:ss").add(30, "s").format("m:ss")).asMinutes() >= this.props.duration ) {
-              ReactNativeAudioStreaming.seekToTime(0);
-              ReactNativeAudioStreaming.pause();
-              clearInterval(this.timerID);
-              this.setState({time: moment(0).format("m:ss"), isMp3Playing: false});
+              this.endAudioAndResetTime();
             }
             else if (this.state.time == "0:00") {
-              console.log("TEST");
-              ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
-              ReactNativeAudioStreaming.pause();
-              ReactNativeAudioStreaming.seekToTime(30);
-              this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
+              this.seekAudioToThirtySeconds();
+              this.addThirtySeconds();
             } else {
               ReactNativeAudioStreaming.goForward(30);
-              this.setState({time: moment(this.state.time, "m:ss").add(30, "s").format("m:ss")});
+              this.addThirtySeconds();
             }
           }}>
             <View style={styles.skip}>
