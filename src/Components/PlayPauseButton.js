@@ -9,11 +9,13 @@ var moment = require('moment');
 
 class PlayPauseButton extends React.Component {
   state = {
-    isMp3Playing: false,
+    isMp3Playing: true,
     time: moment(0).format("m:ss"),
   };
 
   componentDidMount() {
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
+    this.timeStatus();
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
@@ -50,7 +52,7 @@ class PlayPauseButton extends React.Component {
       <View style={styles.container} >
         <TouchableOpacity onPress={() => {
           if (!this.state.isMp3Playing) {
-            ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
+            ReactNativeAudioStreaming.resume();
             this.setState({isMp3Playing: true});
             this.timeStatus();
           } else {
