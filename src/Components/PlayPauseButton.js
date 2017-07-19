@@ -86,6 +86,18 @@ class PlayPauseButton extends React.Component {
     });
   }
 
+  sliderAction(val) {
+    if (this.state.time == 0) {
+      this.seekAudio(val);
+      this.addTime(val);
+      ReactNativeAudioStreaming.seekToTime(val);
+      this.setState({time: val}); 
+    } else {
+    ReactNativeAudioStreaming.seekToTime(val);
+    this.setState({time: val});
+    }
+  }
+
   render() {
     if ( this.state.time == this.props.duration ) {
       this.end();
@@ -119,28 +131,7 @@ class PlayPauseButton extends React.Component {
           minimumValue={0}
           maximumValue={this.props.duration}
           value={this.state.time}
-          onValueChange={val => {
-            if (this.state.time == 0) {
-              this.seekAudio(val);
-              this.addTime(val);
-              ReactNativeAudioStreaming.seekToTime(val);
-              this.setState({time: val}); 
-            } else {
-            ReactNativeAudioStreaming.seekToTime(val);
-            this.setState({time: val});
-            }
-          }}
-          onSlidingComplete={ val => {
-            if (this.state.time == 0) {
-              this.seekAudio(val);
-              this.addTime(val);
-              ReactNativeAudioStreaming.seekToTime(val);
-              this.setState({time: val}); 
-            } else {
-            ReactNativeAudioStreaming.seekToTime(val);
-            this.setState({time: val});
-            }
-          }}
+          onValueChange={val => this.sliderAction(val)}
         />
         <View style={styles.skipContainer}>
           <TouchableOpacity onPress={() => {
