@@ -99,8 +99,10 @@ class PlayPauseButton extends React.Component {
   }
 
   render() {
-    if ( this.state.time == this.props.duration ) {
+    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
       this.end();
+    } else if ( this.state.time == this.props.duration ) {
+      this.reset();
     }
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
