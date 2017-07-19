@@ -3,6 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Slider
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 var moment = require('moment');
@@ -85,13 +86,29 @@ class PlayPauseButton extends React.Component {
     });
   }
 
+  sliderAction(val) {
+    if (this.state.time == 0) {
+      this.seekAudio(val);
+      this.addTime(val);
+      ReactNativeAudioStreaming.seekToTime(val);
+      this.setState({time: val}); 
+    } else {
+      ReactNativeAudioStreaming.seekToTime(val);
+      this.setState({time: val});
+    }
+  }
+
   render() {
-    if ( this.state.time == this.props.duration ) {
+    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
       this.end();
+    } else if ( this.state.time == this.props.duration ) {
+      this.reset();
     }
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
-    var skipTime = 30
+    var skipTime = 30;
+    var timeElapsed = moment(this.state.time*1000).format("m:ss");
+    var timeLeft = moment(this.props.duration*1000 - this.state.time*1000).format("m:ss");
 
     return (
       <View style={styles.container} >
@@ -106,7 +123,18 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <Text>{moment(this.state.time*1000).format("m:ss")}</Text>
+        <View style={styles.timeContainer}>
+          <Text style={styles.timeText}>{timeElapsed}</Text>
+          <Text style={styles.timeText}>-{timeLeft}</Text>
+        </View>
+        <Slider
+          style={{ width: 300 }}
+          step={1}
+          minimumValue={0}
+          maximumValue={this.props.duration}
+          value={this.state.time}
+          onValueChange={val => this.sliderAction(val)}
+        />
         <View style={styles.skipContainer}>
           <TouchableOpacity onPress={() => {
             if ( this.state.time - skipTime < 0 ) {
@@ -141,12 +169,6 @@ class PlayPauseButton extends React.Component {
 }
 
 const styles = {
-  stopwatch: {
-    backgroundColor: 'clear',
-    padding: 5,
-    borderRadius: 5,
-    width: 220,
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -187,6 +209,14 @@ const styles = {
     fontSize: 10,
     color: 'white',
     textAlign: 'center'
+  },
+  timeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10,
+  },
+  timeText: {
+    padding: 10,
   }
 }
 
