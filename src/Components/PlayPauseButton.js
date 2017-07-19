@@ -93,8 +93,8 @@ class PlayPauseButton extends React.Component {
       ReactNativeAudioStreaming.seekToTime(val);
       this.setState({time: val}); 
     } else {
-    ReactNativeAudioStreaming.seekToTime(val);
-    this.setState({time: val});
+      ReactNativeAudioStreaming.seekToTime(val);
+      this.setState({time: val});
     }
   }
 
