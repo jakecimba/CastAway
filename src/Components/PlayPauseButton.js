@@ -3,6 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Slider
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 var moment = require('moment');
@@ -106,7 +107,25 @@ class PlayPauseButton extends React.Component {
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <Text>{moment(this.state.time*1000).format("m:ss")}</Text>
+        <View style={styles.timeContainer}>
+          <Text style={styles.timeText}>{moment(this.state.time*1000).format("m:ss")}</Text>
+          <Text style={styles.timeText}>-{moment(this.props.duration*1000 - this.state.time*1000).format("m:ss")}</Text>
+        </View>
+        <Slider
+          style={{ width: 300 }}
+          step={1}
+          minimumValue={0}
+          maximumValue={this.props.duration}
+          value={this.state.time}
+          onValueChange={val => {
+            ReactNativeAudioStreaming.seekToTime(val);
+            this.setState({ time: val });
+          }}
+          onSlidingComplete={ val => {
+            ReactNativeAudioStreaming.seekToTime(val);
+            this.setState({time: val});
+          }}
+        />
         <View style={styles.skipContainer}>
           <TouchableOpacity onPress={() => {
             if ( this.state.time - skipTime < 0 ) {
@@ -141,12 +160,6 @@ class PlayPauseButton extends React.Component {
 }
 
 const styles = {
-  stopwatch: {
-    backgroundColor: 'clear',
-    padding: 5,
-    borderRadius: 5,
-    width: 220,
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -187,6 +200,14 @@ const styles = {
     fontSize: 10,
     color: 'white',
     textAlign: 'center'
+  },
+  timeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10,
+  },
+  timeText: {
+    padding: 10,
   }
 }
 
