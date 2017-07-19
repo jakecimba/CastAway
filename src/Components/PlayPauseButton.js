@@ -10,20 +10,18 @@ var moment = require('moment');
 class PlayPauseButton extends React.Component {
   state = {
     isMp3Playing: false,
-    time: moment(0).format("m:ss"),
+    time: 0,
   };
 
   componentDidMount() {
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      }
-      else if (info.status == "PLAYING" && info.url == this.props.mp3) {
-        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss"), isMp3Playing: true});
+      } else if (info.status == "PLAYING" && info.url == this.props.mp3) {
+        this.setState({time: parseInt(info.progress.toFixed(0)), isMp3Playing: true});
         this.timeStatus();
-      } 
-      else if (info.url == this.props.mp3) {
-        this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
+      } else if (info.url == this.props.mp3) {
+        this.setState({time: parseInt(info.progress.toFixed(0))});
       }
     });
   }
@@ -37,40 +35,103 @@ class PlayPauseButton extends React.Component {
   
   tick() {
     this.setState({
-      time: moment(this.state.time, "m:ss").add(1, "s").format("m:ss")
+      time: this.state.time + 1
     });
   }
+
+  addTime(seconds) {
+    this.setState({time: this.state.time + seconds});
+  }
+
+  seekAudio(seconds) {
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
+    ReactNativeAudioStreaming.pause();
+    ReactNativeAudioStreaming.seekToTime(seconds);
+  }
   
+  end() {
+    ReactNativeAudioStreaming.seekToTime(0);
+    ReactNativeAudioStreaming.pause();
+    clearInterval(this.timerID);
+    this.setState({time: 0, isMp3Playing: false});
+  }
+
+  skipBack(seconds) {
+    ReactNativeAudioStreaming.goBack(seconds);
+    this.setState({time: this.state.time - seconds});
+  }
+
+  reset() {
+    ReactNativeAudioStreaming.seekToTime(0);
+    this.setState({time: 0});
+  }
+
+  resumeMP3() {
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
+    this.setState({isMp3Playing: true});
+    this.timeStatus();
+  }
+
+  pauseMP3() {
+    ReactNativeAudioStreaming.pause();
+    this.setState({isMp3Playing: false});
+    clearInterval(this.timerID);
+    ReactNativeAudioStreaming.getStatus((error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        this.setState({time: parseInt(info.progress.toFixed(0))});
+      }
+    });
+  }
+
   render() {
-    let playableMp3 = this.props.mp3;
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
+    var skipTime = 30
 
     return (
       <View style={styles.container} >
         <TouchableOpacity onPress={() => {
           if (!this.state.isMp3Playing) {
-            ReactNativeAudioStreaming.play(playableMp3, {showIniOSMediaCenter: true});
-            this.setState({isMp3Playing: true});
-            this.timeStatus();
+            this.resumeMP3();
           } else {
-            ReactNativeAudioStreaming.pause();
-            this.setState({isMp3Playing: false});
-            clearInterval(this.timerID);
-            ReactNativeAudioStreaming.getStatus((error, info) => {
-              if (error) {
-                console.log(error);
-              } else {
-                this.setState({time: moment(info.progress.toFixed(0)*1000).format("m:ss")});
-              }
-            });
+            this.pauseMP3();
           }
         }}>
           <View  style={buttonStyle}>
             <Text style={styles.buttonText}>{buttonStatus}</Text>
           </View>
         </TouchableOpacity>
-        <Text>{this.state.time}</Text>
+        <Text>{moment(this.state.time*1000).format("m:ss")}</Text>
+        <View style={styles.skipContainer}>
+          <TouchableOpacity onPress={() => {
+            if ( this.state.time - skipTime < 0 ) {
+              this.reset();
+            } else {
+              this.skipBack(skipTime);
+            }
+          }}>
+            <View style={styles.skip}>
+              <Text style={styles.skipText}>Backward {skipTime}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            if ( this.state.time + skipTime >= this.props.duration ) {
+              this.end();
+            } else if (this.state.time == 0) {
+              this.seekAudio(skipTime);
+              this.addTime(skipTime);
+            } else {
+              ReactNativeAudioStreaming.goForward(skipTime);
+              this.addTime(skipTime);
+            }
+          }}>
+            <View style={styles.skip}>
+              <Text style={styles.skipText}>Forward {skipTime}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -107,6 +168,23 @@ const styles = {
     color: 'white',
     textAlign: 'center',
   },
+  skipContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10
+  },
+  skip: {
+    height: 20,
+    width: 100,
+    backgroundColor: '#2196F3',
+    marginBottom: 2
+  },
+  skipText: {
+    padding: 5,
+    fontSize: 10,
+    color: 'white',
+    textAlign: 'center'
+  }
 }
 
 export { PlayPauseButton };
