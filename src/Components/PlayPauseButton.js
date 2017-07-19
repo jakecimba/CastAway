@@ -117,7 +117,7 @@ class PlayPauseButton extends React.Component {
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-            if ( this.state.time >= this.props.duration ) {
+            if ( this.state.time + 30 >= this.props.duration ) {
               this.end();
             } else if (this.state.time == 0) {
               this.seekAudio(skipTime);
