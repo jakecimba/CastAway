@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { fetchXml } from './DataSource';
 import {PodcastList} from './PodcastList';
+import {PodcastInfoDisplay} from './PodcastInfoDisplay';
 
 class HomeScreen extends Component {
   state = {
@@ -34,11 +35,12 @@ class HomeScreen extends Component {
       return <Text> Loading </Text>
     }
      
-    let feedItems = feedData.rss.channel[0].item || []
-    
+    let generalFeed = feedData.rss.channel[0];
+    let feedItems = generalFeed.item || []
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
         onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
         items={feedItems}  
