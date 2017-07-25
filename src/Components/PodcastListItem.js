@@ -7,11 +7,11 @@ import {
 } from 'react-native'; 
 
 export default PodcastListItem = ({item, onPodcastSelected}) =>
-    <TouchableOpacity onPress={() => onPodcastSelected(item)}>
-      <View style={styles.button}>
-        <Text style={styles.buttonText}>{item.title}</Text>
-      </View>
-    </TouchableOpacity>
+  <TouchableOpacity onPress={() => onPodcastSelected(item)}>
+    <View style={styles.button}>
+      <Text style={styles.buttonText}>{item.title}</Text>
+    </View>
+  </TouchableOpacity>
 
 const styles = {
   button: {

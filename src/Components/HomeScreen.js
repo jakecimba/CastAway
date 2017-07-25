@@ -41,9 +41,9 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
-        <PodcastList 
+        <PodcastList
         onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
-        items={feedItems}  
+        items={feedItems}
         />
       </View>
     )

@@ -8,7 +8,7 @@ import {
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 var moment = require('moment');
 
-class PlayPauseButton extends React.Component {
+class AudioController extends React.Component {
   state = {
     isMp3Playing: false,
     time: 0,
@@ -220,4 +220,4 @@ const styles = {
   }
 }
 
-export { PlayPauseButton };
+export { AudioController };

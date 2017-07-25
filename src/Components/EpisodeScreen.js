@@ -4,7 +4,7 @@ import {
   View,
   Image
 } from 'react-native';
-import { PlayPauseButton } from './PlayPauseButton';
+import {AudioController} from './AudioController';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
 var striptags = require('striptags');
 var moment = require('moment');
@@ -26,7 +26,7 @@ class EpisodeScreen extends React.Component {
     return (
       <View style={styles.container} >
         <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
-        <PlayPauseButton mp3={feedMp3} duration={dur} />
+        <AudioController mp3={feedMp3} duration={dur} />
       </View>
     );
   }
