@@ -7,14 +7,44 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
+import { fetchXml } from './DataSource';
 
 class AllPodcastsScreen extends Component {
+  state = {
+    channels: [{key: 'http://feeds.podtrac.com/zKq6WZZLTlbM'}, {key: 'http://wtfpod.libsyn.com/rss'}],
+    feedData: []
+  }
   static navigationOptions = {
     title: 'All Podcasts',
   };
   
+  // componentWillMount() {
+  //   function storeXml(channels, storage) {
+  //     for (i = 0, len = channels.length; i < len; i++) {
+  //       fetchXml(channels[i].key)
+  //       .then((json) => {
+  //         storage.push(json)
+  //       }) 
+  //       .catch((error) => {
+  //         console.log(error)
+  //       })
+  //     }
+  //     return storage
+  //   }
+  //   let tempStorage = [];
+  //   storeXml(this.state.channels, tempStorage)
+  //   this.setState({feedData: tempStorage})
+  // }
+  
   render() {
-  const { navigate } = this.props.navigation;
+    let feed = this.state.feedData;
+    // if (!feed) {
+    //   return (
+    //     <Text>Loading</Text>
+    //   )
+    // }
+    
+    const { navigate } = this.props.navigation;
     return (
       <FlatList
         data={[{item: 'a'}]}
