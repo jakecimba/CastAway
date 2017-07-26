@@ -8,6 +8,8 @@ import {AudioController} from './AudioController';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
 var striptags = require('striptags');
 var moment = require('moment');
+var RNFS = require('react-native-fs');
+var Sound = require('react-native-sound');
 
 class EpisodeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,6 +24,15 @@ class EpisodeScreen extends React.Component {
     description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
+
+    let localSong = RNFS.CachesDirectoryPath + '/theDaily.mp3';
+    
+    RNFS.downloadFile({fromUrl: feedMp3, toFile: localSong}).promise.then( res => {
+        console.log("Song Downloaded");
+        let song = new Sound(localSong, '', (error) =>  {
+          song.play();
+        });
+      });
 
     return (
       <View style={styles.container} >
