@@ -10,7 +10,7 @@ import { fetchXml } from './DataSource';
 import {PodcastList} from './PodcastList';
 import {PodcastInfoDisplay} from './PodcastInfoDisplay';
 
-class HomeScreen extends Component {
+class PodcastDetailScreen extends Component {
   state = {
     feedData: null
   };
@@ -59,4 +59,4 @@ const styles = {
   },
 }
 
-export {HomeScreen};
+export {PodcastDetailScreen};

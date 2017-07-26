@@ -1,10 +1,12 @@
 import { StackNavigator } from 'react-navigation';
-import { HomeScreen } from './src/Components/HomeScreen';
+import { PodcastDetailScreen } from './src/Components/PodcastDetailScreen';
 import { EpisodeScreen } from './src/Components/EpisodeScreen';
+import { AllPodcastsScreen } from './src/Components/AllPodcastsScreen';
 
 
 const MyPodcastApp = StackNavigator({
-  Home: { screen: HomeScreen },
+  AllPodcasts: { screen: AllPodcastsScreen },
+  PodcastDetail: { screen: PodcastDetailScreen },
   Episode: { screen: EpisodeScreen },
 });
 
