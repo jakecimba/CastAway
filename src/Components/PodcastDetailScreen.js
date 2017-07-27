@@ -14,27 +14,19 @@ class PodcastDetailScreen extends Component {
   state = {
     feedData: null
   };
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.xmlData.rss.channel[0].title[0],
+  });
 
   componentWillMount() {
-    fetchXml('http://feeds.podtrac.com/zKq6WZZLTlbM')
-    .then((json) => {
-      this.setState({feedData: json})
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+    this.setState({feedData: this.props.navigation.state.params.xmlData})
   }
 
   render() {
-    let { feedData } = this.state
-
-    if (!feedData) {
+    if (!this.state.feedData) {
       return <Text> Loading </Text>
     }
-     
+    let feedData = this.state.feedData;
     let generalFeed = feedData.rss.channel[0];
     let feedItems = generalFeed.item || []
     const { navigate } = this.props.navigation;
