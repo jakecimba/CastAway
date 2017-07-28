@@ -22,16 +22,21 @@ const styles = {
     height: 50,
     marginBottom: 1,
     backgroundColor: '#2196F3',
-    //flex: 1,
-    flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   buttonText: {
-    padding: 15,
+    paddingLeft: 15,
+    paddingTop: 7,
+    paddingBottom: 5,
     color: 'white',
+    height: 50,
+    width: 300
   },
   modal: {
     padding: 15,
-    right: 2
   }
 }
 

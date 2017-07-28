@@ -22,9 +22,8 @@ class EpisodeDetailModal extends Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
+         <View style={styles.container}>
           <View >
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
@@ -40,7 +39,7 @@ class EpisodeDetailModal extends Component {
         <TouchableHighlight onPress={() => {
           this.setModalVisible(true)
         }}>
-          <Text>info</Text>
+          <Text style={styles.infoText}>info</Text>
         </TouchableHighlight>
 
       </View>
@@ -53,6 +52,12 @@ const styles = {
     textAlign: 'right',
     padding: 10,
     fontWeight: 'bold'
+  },
+  infoText: {
+    color: 'white'
+  },
+  container: {
+    padding: 15
   }
 }
 
