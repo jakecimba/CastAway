@@ -107,8 +107,8 @@ class PlayPauseButton extends React.Component {
     let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
     let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
     var skipTime = 30;
-    var timeElapsed = moment(this.state.time*1000).format("m:ss");
-    var timeLeft = moment(this.props.duration*1000 - this.state.time*1000).format("m:ss");
+    var timeElapsed = moment(this.state.time*1000).subtract(19, 'hours').format("HH:mm:ss");
+    var timeLeft = moment(this.props.duration*1000 - this.state.time*1000).subtract(19, 'hours').format("HH:mm:ss");
 
     return (
       <View style={styles.container} >
