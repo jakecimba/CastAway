@@ -16,7 +16,8 @@ export default PodcastList = ({items, onPodcastSelected}) =>
         <PodcastListItem item={item} 
         onPodcastSelected={onPodcastSelected}
         />
-      }  
+      }
+      keyExtractor={item => item.title}
     />
   </View>
 
