@@ -98,6 +98,31 @@ class PlayPauseButton extends React.Component {
     }
   }
 
+  formatTime(seconds) {
+    var hours = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var seconds = seconds - (hours * 3600) - (minutes * 60);
+    var time = ""
+
+    if (hours > 0) {
+      time += hours+":"
+    }
+
+    if (minutes < 10 && time != "") {
+      time += "0"+minutes+":"
+    } else {
+      time += minutes+":"
+    }
+
+    if (seconds < 10) {
+      time += "0"+seconds
+    } else {
+      time += seconds
+    }
+
+    return time
+  }
+
   render() {
     if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
       this.end();
