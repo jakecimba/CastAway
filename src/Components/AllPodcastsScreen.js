@@ -3,27 +3,58 @@ import { StackNavigator } from 'react-navigation';
 import {
   View,
   Text,
-  TouchableOpacity
+  Image,
+  TouchableOpacity,
+  FlatList
 } from 'react-native';
 
 class AllPodcastsScreen extends Component {
+  static navigationOptions = {
+    title: 'All Podcasts',
+  };
+  
   render() {
   const { navigate } = this.props.navigation;
     return (
-      <TouchableOpacity onPress={() => navigate('PodcastDetail')} >
-        <View style={styles.container} >
-          <Text>The Daily</Text>
-        </View>
-      </TouchableOpacity>
+      <FlatList
+        data={[{item: 'a'}]}
+        renderItem={(item) =>
+          <TouchableOpacity onPress={() => navigate('PodcastDetail')} >
+            <View style={styles.buttonContainer} >
+              <Image
+              style={styles.image}
+              source={{uri: 'https://dfkfj8j276wwv.cloudfront.net/images/01/1b/f3/d6/011bf3d6-a448-4533-967b-e2f19e376480/7fdd4469c1b5cb3b66aa7dcc9fa21f138efe9a0310a8a269f3dcd07c83a552844fcc445ea2d53db1e55d6fb077aeaa8a1566851f8f2d8ac4349d9d23a87a69f5.jpeg'}}
+              />
+              <View style={styles.textContainer}>  
+                <Text style={styles.podcastTitle}>The Daily</Text>
+                <Text>The New York Times</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        } 
+      />
     )
   }
 }
 
 const styles = {
-  container: {
-    height: 50,
-    width: 200,
-    backgroundColor: 'grey'
+  buttonContainer: {
+    height: 75,
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#2196F3'
+
+  },
+  image: {
+    height: 75,
+    width: 75,
+    flexDirection: 'column'
+  },
+  podcastTitle: {
+    fontWeight: 'bold'
+  },
+  textContainer: {
+    padding: 10
   }
 }
 
