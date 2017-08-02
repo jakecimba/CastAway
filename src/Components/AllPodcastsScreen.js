@@ -62,7 +62,7 @@ class AllPodcastsScreen extends Component {
             </View>
           </TouchableOpacity>
         }
-        keyExtractor={item => item.rss.channel[0].title[0]} 
+        keyExtractor={item => item.rss.channel[0].title[0]}
       />
     )
   }
