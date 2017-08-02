@@ -21,24 +21,18 @@ class AllPodcastsScreen extends Component {
   componentWillMount() {
     var storage = []
     var channels = this.state.channels
-    var dailyPromise = fetchXml(channels[0].key)
+    for (i = 0; i < channels.length; i++) {
+      var getData = fetchXml(channels[i].key)
       .then((json) => {
         return json
       })
       .catch((error) => {
         console.log(error)
-      })
-    
-    var wtfPromise = fetchXml(channels[1].key)
-      .then((json) => {
-        return json
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      });
+      storage.push(getData);
+    }
 
-    Promise.all([dailyPromise, wtfPromise]).then((objects) => {
-      
+    Promise.all(storage).then((objects) => {
       this.setState({feedData: objects})
     })
   }
