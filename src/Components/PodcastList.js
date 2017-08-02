@@ -9,7 +9,7 @@ import {
 import {PodcastListItem} from './PodcastListItem';
 
 export default PodcastList = ({items, onPodcastSelected}) =>
-  <View>
+  <View style={styles.container}>
     <FlatList
       data={items}
       renderItem={({item}) =>
@@ -20,5 +20,11 @@ export default PodcastList = ({items, onPodcastSelected}) =>
       keyExtractor={item => item.title}
     />
   </View>
+
+const styles = {
+  container: {
+    flex: 1
+  }
+}
 
 export {PodcastList};
