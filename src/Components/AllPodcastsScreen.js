@@ -22,14 +22,14 @@ class AllPodcastsScreen extends Component {
     var storage = []
     var channels = this.state.channels
     for (i = 0; i < channels.length; i++) {
-      var x = fetchXml(channels[i].key)
+      var getData = fetchXml(channels[i].key)
       .then((json) => {
         return json
       })
       .catch((error) => {
         console.log(error)
       });
-      storage.push(x);
+      storage.push(getData);
     }
 
     Promise.all(storage).then((objects) => {
