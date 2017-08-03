@@ -23,25 +23,21 @@ class EpisodeDetailModal extends Component {
           transparent={false}
           visible={this.state.modalVisible}
           >
-         <View style={styles.container}>
-          <View >
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
-              <Text style={styles.close}>X</Text>
-            </TouchableHighlight>
-            <Text>{info.title}</Text>
-            <Text>{description}</Text>
-          </View>
-         </View>
+        <View style={styles.container}>
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+            <Text style={styles.close}>X</Text>
+          </TouchableHighlight>
+          <Text>{info.title}</Text>
+          <Text>{description}</Text>
+        </View>
         </Modal>
-
-        <TouchableHighlight onPress={() => {
-          this.setModalVisible(true)
-        }}>
-          <Text style={styles.infoText}>info</Text>
-        </TouchableHighlight>
-
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(true)
+          }}>
+            <Text style={styles.infoText}>info</Text>
+          </TouchableHighlight>
       </View>
     );
   }
@@ -54,7 +50,11 @@ const styles = {
     fontWeight: 'bold'
   },
   infoText: {
-    color: 'white'
+    color: 'white',
+    textAlign: 'center',
+    height: 40,
+    width: 45,
+    padding: 10
   },
   container: {
     padding: 15
