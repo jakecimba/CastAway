@@ -34,8 +34,8 @@ static navigationOptions = ({ navigation }) => ({
       <View style={styles.container}>
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
-        onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
-        items={feedItems}  
+          onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
+          items={feedItems}
         />
       </View>
     )
@@ -44,7 +44,7 @@ static navigationOptions = ({ navigation }) => ({
 
 const styles = {
   container: {
-    paddingTop: 20,
+    paddingTop: 10,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
