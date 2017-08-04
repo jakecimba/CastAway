@@ -8,7 +8,9 @@ import {
 import {EpisodeDetailModal} from './EpisodeDetailModal'; 
 
 export default PodcastListItem = ({item, onPodcastSelected}) =>
-    <TouchableOpacity onPress={() => onPodcastSelected(item)}>
+    <TouchableOpacity onPress={() => {
+        onPodcastSelected(item)
+      }}>
       <View style={styles.button}>
         <Text style={styles.buttonText}>{item.title}</Text>
         <View style={styles.modal}>
@@ -22,6 +24,15 @@ const styles = {
     height: 50,
     marginBottom: 1,
     backgroundColor: '#2196F3',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  buttonPlaying: {
+    height: 50,
+    marginBottom: 1,
+    backgroundColor: 'grey',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

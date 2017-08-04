@@ -4,7 +4,7 @@ import {
   View,
   Image
 } from 'react-native';
-import { PlayPauseButton } from './PlayPauseButton';
+import { AudioController } from './AudioController';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
 var striptags = require('striptags');
 var moment = require('moment');
@@ -22,11 +22,12 @@ class EpisodeScreen extends React.Component {
     description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
+    timeStatus = this.props.navigation.state.params.timeStamp;
 
     return (
       <View style={styles.container} >
         <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
-        <PlayPauseButton mp3={feedMp3} duration={dur} />
+        <AudioController mp3={feedMp3} duration={dur} timeStatus={timeStatus}/>
       </View>
     );
   }
