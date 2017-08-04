@@ -47,7 +47,7 @@ const styles = {
     width: 300
   },
   modal: {
-    padding: 15,
+    paddingRight: 10,
   }
 }
 
