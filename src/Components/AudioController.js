@@ -16,13 +16,14 @@ class AudioController extends React.Component {
   };
 
   componentDidMount() {
-    this.resumeMP3();
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      } else if (this.state.selected == info.url) {
+      } else if (this.props.mp3 == info.url) {
+        this.resumeMP3();
         this.setState({time: parseInt(info.progress.toFixed(0))})
       } else {
+        this.playMP3();
         this.setState({time: 0})
       }
     });
@@ -69,6 +70,12 @@ class AudioController extends React.Component {
   }
 
   resumeMP3() {
+    ReactNativeAudioStreaming.resume();
+    this.setState({isMp3Playing: true});
+    this.timeStatus();
+  }
+
+  playMP3() {
     ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
     this.setState({isMp3Playing: true});
     this.timeStatus();
