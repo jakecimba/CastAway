@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import {PodcastListItem} from './PodcastListItem';
 
-export default PodcastList = ({items, onPodcastSelected}) =>
+export default PodcastList = ({items, onPodcastSelected, selectedEpisode}) =>
   <View style={styles.container}>
     <FlatList
       data={items}
       renderItem={({item}) =>
         <PodcastListItem item={item} 
         onPodcastSelected={onPodcastSelected}
+        selectedEpisode={selectedEpisode}
         />
       }
       keyExtractor={item => item.title}

@@ -22,12 +22,12 @@ class EpisodeScreen extends React.Component {
     description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
-    timeStatus = this.props.navigation.state.params.timeStamp;
+    selectedEpisode = this.props.navigation.state.params.selected;
 
     return (
       <View style={styles.container} >
         <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
-        <AudioController mp3={feedMp3} duration={dur} timeStatus={timeStatus}/>
+        <AudioController mp3={feedMp3} duration={dur} selected={selectedEpisode}/>
       </View>
     );
   }

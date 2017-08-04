@@ -10,20 +10,20 @@ var moment = require('moment');
 
 class AudioController extends React.Component {
   state = {
-    isMp3Playing: true,
-    time: this.props.timeStatus,
+    isMp3Playing: false,
+    time: 0,
+    selected: this.props.selected
   };
 
   componentDidMount() {
+    this.resumeMP3();
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      // } else if (info.status == "PLAYING" && info.url == this.props.mp3) {
-      //   this.setState({time: parseInt(info.progress.toFixed(0)), isMp3Playing: true});
-      //   this.timeStatus();
-      } else if (info.url == this.props.mp3) {
-        this.setState({time: parseInt(info.progress.toFixed(0))});
-        this.timeStatus();
+      } else if (this.state.selected == info.url) {
+        this.setState({time: parseInt(info.progress.toFixed(0))})
+      } else {
+        this.setState({time: 0})
       }
     });
   }
@@ -69,7 +69,7 @@ class AudioController extends React.Component {
   }
 
   resumeMP3() {
-    ReactNativeAudioStreaming.resume();
+    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
     this.setState({isMp3Playing: true});
     this.timeStatus();
   }

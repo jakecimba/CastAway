@@ -14,7 +14,7 @@ import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 class PodcastDetailScreen extends Component {
   state = {
     feedData: null,
-    time: 0
+    selectedEpisode: null
   };
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.xmlData.rss.channel[0].title[0],
@@ -24,22 +24,8 @@ class PodcastDetailScreen extends Component {
     this.setState({feedData: this.props.navigation.state.params.xmlData})
   }
 
-  timeStatus() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
-  
-  tick() {
-    this.setState({
-      time: this.state.time + 1
-    });
-  }
-
-  playMP3(mp3) {
-    ReactNativeAudioStreaming.play(mp3, {showIniOSMediaCenter: true});
-    this.timeStatus();
+  selectEpisode(mp3) {
+    this.setState({selectedEpisode: mp3});
   }
 
   render() {
@@ -55,11 +41,11 @@ class PodcastDetailScreen extends Component {
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
           onPodcastSelected={ (episode) => {
-            this.playMP3(episode.enclosure[0]["$"].url.replace("https", "http"));
-            
-            navigate('Episode', { episode: episode, timeStamp: this.state.time }) 
+            this.selectEpisode(episode.enclosure[0]["$"].url.replace("https", "http"));
+            navigate('Episode', { episode: episode, selected: this.state.selectedEpisode }) 
           }}
           items={feedItems}
+          selectedEpisode={this.state.selectedEpisode}
         />
       </View>
     )

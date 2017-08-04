@@ -7,11 +7,11 @@ import {
 } from 'react-native';
 import {EpisodeDetailModal} from './EpisodeDetailModal'; 
 
-export default PodcastListItem = ({item, onPodcastSelected}) =>
+export default PodcastListItem = ({item, onPodcastSelected, selectedEpisode}) =>
     <TouchableOpacity onPress={() => {
         onPodcastSelected(item)
       }}>
-      <View style={styles.button}>
+      <View style={(item.enclosure[0]["$"].url.replace("https", "http")==selectedEpisode) ? styles.buttonPlaying : styles.button}>
         <Text style={styles.buttonText}>{item.title}</Text>
         <View style={styles.modal}>
           <EpisodeDetailModal info={item}/>
