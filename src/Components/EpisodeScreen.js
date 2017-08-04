@@ -22,7 +22,6 @@ class EpisodeScreen extends React.Component {
     description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
-    selectedEpisode = this.props.navigation.state.params.selected;
 
     return (
       <View style={styles.container} >

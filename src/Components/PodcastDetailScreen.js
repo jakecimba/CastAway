@@ -9,7 +9,6 @@ import {
 import { fetchXml } from './DataSource';
 import {PodcastList} from './PodcastList';
 import {PodcastInfoDisplay} from './PodcastInfoDisplay';
-import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 
 class PodcastDetailScreen extends Component {
   state = {
@@ -35,9 +34,7 @@ class PodcastDetailScreen extends Component {
       <View style={styles.container}>
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
-          onPodcastSelected={ (episode) => {
-            navigate('Episode', { episode: episode}) 
-          }}
+          onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
           items={feedItems}
         />
       </View>

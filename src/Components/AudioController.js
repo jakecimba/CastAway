@@ -11,6 +11,7 @@ var moment = require('moment');
 class AudioController extends React.Component {
   state = {
     isMp3Playing: false,
+    time: 0
   };
 
   componentDidMount() {
