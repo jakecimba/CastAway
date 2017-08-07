@@ -27,7 +27,7 @@ class AudioController extends React.Component {
       }
     });
   }
-
+  
   timeStatus() {
     this.timerID = setInterval(
       () => this.tick(),

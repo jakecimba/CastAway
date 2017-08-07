@@ -27,10 +27,8 @@ class PodcastListItem extends PureComponent {
   render() {
     return (
       <TouchableOpacity onPress={() => {
-        this.props.onPressItem(this.props.item)
-        this.props.onPodcastSelected(this.props.item)
-        console.log("Current Episode", this.props.item.title)
-        console.log("Selected State Episode", this.props)
+        this.props.highlightEpisode(this.props.item)
+        this.props.navigateToEpisode(this.props.item)
         }}>
         <View style={(this.props.item.title == this.props.selected) ? styles.buttonPlaying : styles.buttonNotPlaying}>
           <Text style={styles.buttonText}>{this.props.item.title}</Text>

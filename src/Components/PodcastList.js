@@ -26,7 +26,7 @@ class PodcastList extends PureComponent {
     selected: null
   }
 
-  onPressItem(item) {
+  highlightEpisode(item) {
     this.setState({selected: item})
   }
   
@@ -37,8 +37,8 @@ class PodcastList extends PureComponent {
           data={this.props.items}
           renderItem={({item}) =>
             <PodcastListItem item={item}
-            onPodcastSelected={this.props.onPodcastSelected}
-            onPressItem={(item) => this.onPressItem(item.title)}
+            navigateToEpisode={this.props.navigateToEpisode}
+            highlightEpisode={(item) => this.highlightEpisode(item.title)}
             selected={this.state.selected}
             />
           }
