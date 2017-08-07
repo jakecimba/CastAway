@@ -1,4 +1,4 @@
-import React , {Component} from 'react';
+import React , {PureComponent, Component} from 'react';
 import { StackNavigator } from 'react-navigation';
 import {
   Text,
@@ -8,18 +8,46 @@ import {
 } from 'react-native';
 import {PodcastListItem} from './PodcastListItem';
 
-export default PodcastList = ({items, onPodcastSelected}) =>
-  <View style={styles.container}>
-    <FlatList
-      data={items}
-      renderItem={({item}) =>
-        <PodcastListItem item={item} 
-        onPodcastSelected={onPodcastSelected}
+// export default PodcastList = ({items, onPodcastSelected}) =>
+//   <View style={styles.container}>
+//     <FlatList
+//       data={items}
+//       renderItem={({item}) =>
+//         <PodcastListItem item={item}
+//         onPodcastSelected={onPodcastSelected}
+//         />
+//       }
+//       keyExtractor={item => item.title}
+//     />
+//   </View>
+
+class PodcastList extends PureComponent {
+  state = {
+    selected: null
+  }
+
+  onPressItem(item) {
+    this.setState({selected: item})
+  }
+  
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={this.props.items}
+          renderItem={({item}) =>
+            <PodcastListItem item={item}
+            onPodcastSelected={this.props.onPodcastSelected}
+            onPressItem={(item) => this.onPressItem(item.title)}
+            selected={this.state.selected}
+            />
+          }
+          keyExtractor={item => item.title}
         />
-      }
-      keyExtractor={item => item.title}
-    />
-  </View>
+      </View>
+    ) 
+  }
+}
 
 const styles = {
   container: {

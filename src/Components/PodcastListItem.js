@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
   Text,
   View,
@@ -7,21 +7,56 @@ import {
 } from 'react-native';
 import {EpisodeDetailModal} from './EpisodeDetailModal'; 
 
-export default PodcastListItem = ({item, onPodcastSelected}) =>
-    <TouchableOpacity onPress={() => onPodcastSelected(item)}>
-      <View style={styles.button}>
-        <Text style={styles.buttonText}>{item.title}</Text>
-        <View style={styles.modal}>
-          <EpisodeDetailModal info={item}/>
+// export default PodcastListItem = ({item, onPodcastSelected, onEpisodeSelect, selected}) => {
+//   return (
+//     <TouchableOpacity onPress={() => {
+//       onEpisodeSelect(item)
+//       onPodcastSelected(item)
+//       }}>
+//       <View style={(item.title == selected) ? styles.buttonPlaying : styles.buttonNotPlaying}>
+//         <Text style={styles.buttonText}>{item.title}</Text>
+//         <View style={styles.modal}>
+//           <EpisodeDetailModal info={item}/>
+//         </View>
+//       </View>
+//     </TouchableOpacity>
+//   )
+// }
+
+class PodcastListItem extends PureComponent {
+  render() {
+    return (
+      <TouchableOpacity onPress={() => {
+        this.props.onPressItem(this.props.item)
+        this.props.onPodcastSelected(this.props.item)
+        console.log("Current Episode", this.props.item.title)
+        console.log("Selected State Episode", this.props)
+        }}>
+        <View style={(this.props.item.title == this.props.selected) ? styles.buttonPlaying : styles.buttonNotPlaying}>
+          <Text style={styles.buttonText}>{this.props.item.title}</Text>
+          <View style={styles.modal}>
+            <EpisodeDetailModal info={this.props.item}/>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    )
+  }
+}
 
 const styles = {
-  button: {
+  buttonNotPlaying: {
     height: 50,
     marginBottom: 1,
     backgroundColor: '#2196F3',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  buttonPlaying: {
+    height: 50,
+    marginBottom: 1,
+    backgroundColor: 'grey',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',

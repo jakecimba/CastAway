@@ -22,6 +22,11 @@ class PodcastDetailScreen extends Component {
     this.setState({feedData: this.props.navigation.state.params.xmlData})
   }
 
+  onEpisodeSelection(episode) {
+    this.props.navigation.navigate('Episode', { episode: episode })
+  }
+
+
   render() {
     if (!this.state.feedData) {
       return <Text> Loading </Text>
@@ -34,7 +39,7 @@ class PodcastDetailScreen extends Component {
       <View style={styles.container}>
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
-          onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
+          onPodcastSelected={ (episode) => { this.onEpisodeSelection(episode) }}
           items={feedItems}
         />
       </View>
