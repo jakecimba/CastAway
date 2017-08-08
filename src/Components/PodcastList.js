@@ -8,19 +8,6 @@ import {
 } from 'react-native';
 import {PodcastListItem} from './PodcastListItem';
 
-// export default PodcastList = ({items, onPodcastSelected}) =>
-//   <View style={styles.container}>
-//     <FlatList
-//       data={items}
-//       renderItem={({item}) =>
-//         <PodcastListItem item={item}
-//         onPodcastSelected={onPodcastSelected}
-//         />
-//       }
-//       keyExtractor={item => item.title}
-//     />
-//   </View>
-
 class PodcastList extends PureComponent {
   state = {
     selected: null
@@ -29,7 +16,7 @@ class PodcastList extends PureComponent {
   highlightEpisode(item) {
     this.setState({selected: item})
   }
-  
+
   render() {
     return (
       <View style={styles.container}>

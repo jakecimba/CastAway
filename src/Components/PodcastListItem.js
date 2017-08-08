@@ -7,38 +7,21 @@ import {
 } from 'react-native';
 import {EpisodeDetailModal} from './EpisodeDetailModal'; 
 
-// export default PodcastListItem = ({item, onPodcastSelected, onEpisodeSelect, selected}) => {
-//   return (
-//     <TouchableOpacity onPress={() => {
-//       onEpisodeSelect(item)
-//       onPodcastSelected(item)
-//       }}>
-//       <View style={(item.title == selected) ? styles.buttonPlaying : styles.buttonNotPlaying}>
-//         <Text style={styles.buttonText}>{item.title}</Text>
-//         <View style={styles.modal}>
-//           <EpisodeDetailModal info={item}/>
-//         </View>
-//       </View>
-//     </TouchableOpacity>
-//   )
-// }
-
-class PodcastListItem extends PureComponent {
-  render() {
-    return (
-      <TouchableOpacity onPress={() => {
-        this.props.highlightEpisode(this.props.item)
-        this.props.navigateToEpisode(this.props.item)
-        }}>
-        <View style={(this.props.item.title == this.props.selected) ? styles.buttonPlaying : styles.buttonNotPlaying}>
-          <Text style={styles.buttonText}>{this.props.item.title}</Text>
-          <View style={styles.modal}>
-            <EpisodeDetailModal info={this.props.item}/>
-          </View>
+export default PodcastListItem = ({item, navigateToEpisode, highlightEpisode, selected}) => {
+  return (
+    <TouchableOpacity 
+      onPress={() => {
+        highlightEpisode(item)
+        navigateToEpisode(item)
+      }}>
+      <View style={(selected == item.title) ? styles.buttonPlaying : styles.buttonNotPlaying}>
+        <Text style={styles.buttonText}>{item.title}</Text>
+        <View style={styles.modal}>
+          <EpisodeDetailModal info={item}/>
         </View>
-      </TouchableOpacity>
-    )
-  }
+      </View>
+    </TouchableOpacity>
+  )
 }
 
 const styles = {
