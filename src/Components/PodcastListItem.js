@@ -1,20 +1,18 @@
-import React, {Component, PureComponent} from 'react';
+import React from 'react';
 import {
   Text,
   View,
-  FlatList,
   TouchableOpacity
 } from 'react-native';
-import {EpisodeDetailModal} from './EpisodeDetailModal'; 
+import { EpisodeDetailModal } from './EpisodeDetailModal';
 
-export default PodcastListItem = ({item, navigateToEpisode, highlightEpisode, selected}) => {
+export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisode}) => {
   return (
-    <TouchableOpacity 
-      onPress={() => {
-        highlightEpisode(item)
+    <TouchableOpacity onPress={() => {
+        onPressItem(item.title)
         navigateToEpisode(item)
       }}>
-      <View style={(selected == item.title) ? styles.buttonPlaying : styles.buttonNotPlaying}>
+      <View style={(selected == true) ? styles.buttonPlaying : styles.buttonNotPlaying}>
         <Text style={styles.buttonText}>{item.title}</Text>
         <View style={styles.modal}>
           <EpisodeDetailModal info={item}/>

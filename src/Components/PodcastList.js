@@ -1,38 +1,44 @@
-import React , {PureComponent, Component} from 'react';
+import React , { PureComponent } from 'react';
 import { StackNavigator } from 'react-navigation';
 import {
-  Text,
   View,
   FlatList,
-  TouchableOpacity
 } from 'react-native';
 import {PodcastListItem} from './PodcastListItem';
 
 class PodcastList extends PureComponent {
-  state = {
-    selected: null
+
+  state = {selected: (new Map(): Map<string, boolean>)}
+
+  _keyExtractor = (item, index) => item.title
+
+  _onPressItem = (title: string) => {
+    this.setState((state) => {
+      const selected = new Map(state.selected)
+      selected.set(title, !selected.get(title))
+      return {selected}
+    })
   }
 
-  highlightEpisode(item) {
-    this.setState({selected: item})
-  }
+  _renderItem = ({item}) => (
+    <PodcastListItem item={item}
+      onPressItem={this._onPressItem}
+      navigateToEpisode={this.props.navigateToEpisode}
+      selected={!!this.state.selected.get(item.title)}
+    />
+  )
 
   render() {
     return (
       <View style={styles.container}>
         <FlatList
           data={this.props.items}
-          renderItem={({item}) =>
-            <PodcastListItem item={item}
-            navigateToEpisode={this.props.navigateToEpisode}
-            highlightEpisode={(item) => this.highlightEpisode(item.title)}
-            selected={this.state.selected}
-            />
-          }
-          keyExtractor={item => item.title}
+          extraData={this.state}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
         />
       </View>
-    ) 
+    )
   }
 }
 
