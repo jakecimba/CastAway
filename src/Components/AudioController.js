@@ -28,6 +28,10 @@ class AudioController extends React.Component {
     });
   }
   
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
   timeStatus() {
     this.timerID = setInterval(
       () => this.tick(),
