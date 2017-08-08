@@ -8,23 +8,28 @@ import {
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 var moment = require('moment');
 
-class PlayPauseButton extends React.Component {
+class AudioController extends React.Component {
   state = {
     isMp3Playing: false,
-    time: 0,
+    time: 0
   };
 
   componentDidMount() {
     ReactNativeAudioStreaming.getStatus((error, info) => {
       if (error) {
         console.log(error);
-      } else if (info.status == "PLAYING" && info.url == this.props.mp3) {
-        this.setState({time: parseInt(info.progress.toFixed(0)), isMp3Playing: true});
-        this.timeStatus();
-      } else if (info.url == this.props.mp3) {
-        this.setState({time: parseInt(info.progress.toFixed(0))});
+      } else if (this.props.mp3 == info.url) {
+        this.resumeMP3();
+        this.setState({time: parseInt(info.progress.toFixed(0))})
+      } else {
+        this.playMP3();
+        this.setState({time: 0})
       }
     });
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   timeStatus() {
@@ -68,6 +73,12 @@ class PlayPauseButton extends React.Component {
   }
 
   resumeMP3() {
+    ReactNativeAudioStreaming.resume();
+    this.setState({isMp3Playing: true});
+    this.timeStatus();
+  }
+
+  playMP3() {
     ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
     this.setState({isMp3Playing: true});
     this.timeStatus();
@@ -245,4 +256,4 @@ const styles = {
   }
 }
 
-export { PlayPauseButton };
+export { AudioController };

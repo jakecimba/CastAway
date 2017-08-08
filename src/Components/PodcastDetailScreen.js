@@ -12,15 +12,20 @@ import {PodcastInfoDisplay} from './PodcastInfoDisplay';
 
 class PodcastDetailScreen extends Component {
   state = {
-    feedData: null
+    feedData: null,
   };
-static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.xmlData.rss.channel[0].title[0],
   });
 
   componentWillMount() {
     this.setState({feedData: this.props.navigation.state.params.xmlData})
   }
+
+  navigateToEpisode(episode) {
+    this.props.navigation.navigate('Episode', { episode: episode })
+  }
+
 
   render() {
     if (!this.state.feedData) {
@@ -34,7 +39,7 @@ static navigationOptions = ({ navigation }) => ({
       <View style={styles.container}>
         <PodcastInfoDisplay generalInfoFeed={generalFeed} />
         <PodcastList 
-          onPodcastSelected={ (episode) => navigate('Episode', { episode: episode }) }
+          navigateToEpisode={ (episode) => { this.navigateToEpisode(episode) }}
           items={feedItems}
         />
       </View>
