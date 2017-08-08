@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 import {PodcastListItem} from './PodcastListItem';
 
+var previousTitle;
+
 class PodcastList extends PureComponent {
 
   state = {selected: (new Map(): Map<string, boolean>)}
@@ -14,8 +16,12 @@ class PodcastList extends PureComponent {
 
   _onPressItem = (title: string) => {
     this.setState((state) => {
+      if (state.selected.has(previousTitle)) {
+        state.selected.delete(previousTitle)
+      }
       const selected = new Map(state.selected)
       selected.set(title, !selected.get(title))
+      previousTitle = title
       return {selected}
     })
   }
