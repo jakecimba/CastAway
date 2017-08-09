@@ -18,7 +18,8 @@ class AllPodcastsScreen extends Component {
   static navigationOptions = {
     title: 'All Podcasts',
     headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
-    headerStyle: {backgroundColor: 'black', height: 74}
+    headerStyle: {backgroundColor: 'black', height: 74},
+    headerBackTitle: null,
   };
   
   componentWillMount() {
@@ -60,7 +61,7 @@ class AllPodcastsScreen extends Component {
                 source={{uri: item.rss.channel[0].image[0].url[0]}}
                 />
                 <View style={styles.textContainer}>
-                  <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0]}</Text>
+                  <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0].replace("Podcast", "")}</Text>
                   <Text style={styles.podcastAuthor}>{item.rss.channel[0]["itunes:author"][0]}</Text>
                 </View>
               </View>
@@ -103,7 +104,7 @@ const styles = {
     color: 'white',
     marginBottom: 6,
     lineHeight: 24,
-    width: 200
+    width: 175
   },
   podcastAuthor: {
     fontFamily: 'Montserrat-Regular',

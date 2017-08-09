@@ -12,10 +12,12 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
         onPressItem(item.title)
         navigateToEpisode(item)
       }}>
-      <View style={(selected == true) ? styles.buttonPlaying : styles.buttonNotPlaying}>
-        <Text style={styles.buttonText}>{item.title}</Text>
-        <View style={styles.modal}>
-          <EpisodeDetailModal info={item}/>
+      <View style={styles.button}>
+        <View style={styles.topRow}>
+          <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
+          <View style={styles.modal}>
+            <EpisodeDetailModal info={item}/>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -23,34 +25,38 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
 }
 
 const styles = {
-  buttonNotPlaying: {
-    height: 50,
-    marginBottom: 1,
-    backgroundColor: '#2196F3',
+  button: {
+    height: 153,
+    marginBottom: 2,
+    backgroundColor: 'black',
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center'
   },
-  buttonPlaying: {
-    height: 50,
-    marginBottom: 1,
-    backgroundColor: 'grey',
-    flex: 1,
+  buttonTextPlaying: {
+    width: 275,
+    height: 22,
+    paddingLeft: 18,
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    color: 'rgb(0, 173, 211)'
+  },
+  buttonTextNotPlaying: {
+    width: 275,
+    height: 22,
+    paddingLeft: 18,
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    color: 'white'
+  },
+  topRow: {
+    top: 28,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  buttonText: {
-    paddingLeft: 15,
-    paddingTop: 7,
-    paddingBottom: 5,
-    color: 'white',
-    height: 50,
-    width: 300
   },
   modal: {
-    paddingRight: 10,
+    left: 64
   }
 }
 

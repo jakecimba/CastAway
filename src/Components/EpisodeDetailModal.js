@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Modal, Text, TouchableHighlight, View, Image } from 'react-native';
 var striptags = require('striptags');
 
 class EpisodeDetailModal extends Component {
@@ -36,7 +36,7 @@ class EpisodeDetailModal extends Component {
           <TouchableHighlight onPress={() => {
             this.setModalVisible(true)
           }}>
-            <Text style={styles.infoText}>info</Text>
+            <Image source={{uri: 'infoButton'}} style={styles.infoButton}/>
           </TouchableHighlight>
       </View>
     );
@@ -58,6 +58,10 @@ const styles = {
   },
   container: {
     padding: 15
+  },
+  infoButton: {
+    height: 22,
+    width: 22
   }
 }
 
