@@ -9,7 +9,17 @@ var striptags = require('striptags');
 
 export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisode}) => {
   let description = String(item.description);
-  description = striptags(description, [] , "").substring(0,89);
+  description = striptags(description, [] , "");
+
+  function formatDuration(duration) {
+    var i = 0;
+    while (duration[i] == '0' || duration[i] == ':') {
+      duration = duration.substring(1, duration.length)
+    };
+    return duration;
+  }
+
+
   return (
     <View style={styles.background}>
       <TouchableOpacity onPress={() => {
@@ -23,8 +33,8 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
               <EpisodeDetailModal info={item}/>
             </View>
           </View>
-          <Text style={styles.duration}>{item["itunes:duration"]}</Text>
-          <Text style={styles.description}>{description}...</Text>
+          <Text style={styles.duration}>{formatDuration(String(item["itunes:duration"]))}</Text>
+          <Text style={styles.description}>{description}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -77,7 +87,8 @@ const styles = {
     width: 339,
     left: 18,
     bottom: 26,
-    lineHeight: 21
+    lineHeight: 21,
+    height: 42
   }
 }
 
