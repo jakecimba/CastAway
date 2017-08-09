@@ -5,29 +5,39 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { EpisodeDetailModal } from './EpisodeDetailModal';
+var striptags = require('striptags');
 
 export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisode}) => {
+  let description = String(item.description);
+  description = striptags(description, [] , "").substring(0,89);
   return (
-    <TouchableOpacity onPress={() => {
-        onPressItem(item.title)
-        navigateToEpisode(item)
-      }}>
-      <View style={styles.button}>
-        <View style={styles.topRow}>
-          <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
-          <View style={styles.modal}>
-            <EpisodeDetailModal info={item}/>
+    <View style={styles.background}>
+      <TouchableOpacity onPress={() => {
+          onPressItem(item.title)
+          navigateToEpisode(item)
+        }}>
+        <View style={styles.button}>
+          <View style={styles.topRow}>
+            <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
+            <View style={styles.modal}>
+              <EpisodeDetailModal info={item}/>
+            </View>
           </View>
+          <Text style={styles.duration}>{item["itunes:duration"]}</Text>
+          <Text style={styles.description}>{description}...</Text>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = {
+  background: {
+    backgroundColor: 'rgb(76, 76, 76)'
+  },
   button: {
     height: 153,
-    marginBottom: 2,
+    marginBottom: 1,
     backgroundColor: 'black',
     flex: 1,
     flexDirection: 'column',
@@ -35,7 +45,6 @@ const styles = {
   },
   buttonTextPlaying: {
     width: 275,
-    height: 22,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
@@ -44,7 +53,6 @@ const styles = {
   },
   buttonTextNotPlaying: {
     width: 275,
-    height: 22,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
@@ -57,6 +65,19 @@ const styles = {
   },
   modal: {
     left: 64
+  },
+  duration: {
+    color: 'rgb(155, 155, 155)',
+    left: 18,
+    fontFamily: 'HelveticaNeue',
+  },
+  description: {
+    color: 'white',
+    fontFamily: 'Montserrat-Regular',
+    width: 339,
+    left: 18,
+    bottom: 26,
+    lineHeight: 21
   }
 }
 
