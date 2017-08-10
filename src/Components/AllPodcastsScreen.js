@@ -4,7 +4,8 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  ImageBackground,
+  TouchableHighlight,
   FlatList
 } from 'react-native';
 import { fetchXml } from './DataSource';
@@ -16,6 +17,8 @@ class AllPodcastsScreen extends Component {
   }
   static navigationOptions = {
     title: 'All Podcasts',
+    headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
+    headerStyle: {backgroundColor: 'black', height: 74}
   };
   
   componentWillMount() {
@@ -40,53 +43,70 @@ class AllPodcastsScreen extends Component {
   render() {
     let feedData = this.state.feedData
     
-    if (feedData.length != this.state.channels.length) {
-      return <Text> Loading </Text>
-    }
     const { navigate } = this.props.navigation;
-    console.log(feedData)
     return (
-      <FlatList
-        data={feedData}
-        renderItem={({item}) =>
-          <TouchableOpacity onPress={() => navigate('PodcastDetail', { xmlData: item })} >
-            <View style={styles.buttonContainer} >
-              <Image
-              style={styles.image}
-              source={{uri: item.rss.channel[0].image[0].url[0]}}
-              />
-              <View style={styles.textContainer}>  
-                <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0]}</Text>
-                <Text>{item.rss.channel[0]["itunes:author"][0]}</Text>
+      <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
+        <FlatList
+          data={feedData}
+          renderItem={({item}) =>
+            <TouchableHighlight onPress={() => navigate('PodcastDetail', { xmlData: item })} >
+              <View style={styles.buttonContainer} >
+                <Image
+                style={styles.image}
+                source={{uri: item.rss.channel[0].image[0].url[0]}}
+                />
+                <View style={styles.textContainer}>
+                  <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0].replace("Podcast", "")}</Text>
+                  <Text style={styles.podcastAuthor}>{item.rss.channel[0]["itunes:author"][0]}</Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        }
-        keyExtractor={item => item.rss.channel[0].title[0]}
-      />
+            </TouchableHighlight>
+          }
+          keyExtractor={item => item.rss.channel[0].title[0]}
+        />
+      </ImageBackground>
     )
   }
 }
 
 const styles = {
+  background: {
+    flex: 1
+  },
   buttonContainer: {
-    height: 75,
+    height: 123.2,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#2196F3'
-
-  },
-  image: {
-    height: 75,
-    width: 75,
-    flexDirection: 'column'
-  },
-  podcastTitle: {
-    fontWeight: 'bold'
+    backgroundColor: 'rgb(53, 53, 53)',
+    marginBottom: 3.8
   },
   textContainer: {
-    padding: 10
-  }
+    left: 33,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  image: {
+    height: 76,
+    width: 78,
+    left: 18,
+    top: 24,
+  },
+  podcastTitle: {
+    fontSize: 23,
+    letterSpacing: 1.6,
+    fontFamily: 'Montserrat-SemiBold',
+    color: 'white',
+    marginBottom: 6,
+    lineHeight: 24,
+    width: 175
+  },
+  podcastAuthor: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 16,
+    letterSpacing: 0.2,
+    color: 'rgb(208, 208, 208)',
+  },
 }
 
 export { AllPodcastsScreen };

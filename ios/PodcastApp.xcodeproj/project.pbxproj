@@ -38,6 +38,8 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		921E75E11F13DE2400E47571 /* libStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 921E75DA1F13DD6B00E47571 /* libStreamingKit.a */; };
 		9F69B1A7DF0C470B9F8ED47F /* libReactNativeAudioStreaming.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E473D0C544D64C6ABD8BA2F2 /* libReactNativeAudioStreaming.a */; };
+		A176E79F1F3B5A1C00F92F77 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A176E79D1F3B5A1C00F92F77 /* Montserrat-Regular.otf */; };
+		A176E7A01F3B5A1C00F92F77 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A176E79E1F3B5A1C00F92F77 /* Montserrat-SemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +317,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		921E75D21F13DD6A00E47571 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/Pods/Pods.xcodeproj"; sourceTree = "<group>"; };
 		921E75DB1F13DD8100E47571 /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
+		A176E79D1F3B5A1C00F92F77 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Regular.otf"; path = "Fonts/Montserrat-Regular.otf"; sourceTree = "<group>"; };
+		A176E79E1F3B5A1C00F92F77 /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-SemiBold.otf"; path = "Fonts/Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		D6474AD905A1425AA389AC03 /* ReactNativeAudioStreaming.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioStreaming.xcodeproj; path = "../node_modules/react-native-audio-streaming/ios/ReactNativeAudioStreaming.xcodeproj"; sourceTree = "<group>"; };
 		E473D0C544D64C6ABD8BA2F2 /* libReactNativeAudioStreaming.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeAudioStreaming.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -534,6 +538,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A176E77B1F3B59EA00F92F77 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* PodcastApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PodcastAppTests */,
@@ -577,6 +582,15 @@
 				921E75E01F13DD8100E47571 /* libReactNativeAudioStreaming.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A176E77B1F3B59EA00F92F77 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A176E79E1F3B5A1C00F92F77 /* Montserrat-SemiBold.otf */,
+				A176E79D1F3B5A1C00F92F77 /* Montserrat-Regular.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1004,7 +1018,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A176E7A01F3B5A1C00F92F77 /* Montserrat-SemiBold.otf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A176E79F1F3B5A1C00F92F77 /* Montserrat-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
