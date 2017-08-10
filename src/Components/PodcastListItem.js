@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableOpacity
+  TouchableHighlight
 } from 'react-native';
 import { EpisodeDetailModal } from './EpisodeDetailModal';
 var striptags = require('striptags');
@@ -22,7 +22,7 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
 
   return (
     <View style={styles.background}>
-      <TouchableOpacity onPress={() => {
+      <TouchableHighlight onPress={() => {
           onPressItem(item.title)
           navigateToEpisode(item)
         }}>
@@ -36,7 +36,7 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
               <EpisodeDetailModal info={item}/>
             </View>
         </View>
-      </TouchableOpacity>
+      </TouchableHighlight>
     </View>
   )
 }

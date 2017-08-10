@@ -5,7 +5,7 @@ import {
   Text,
   Image,
   ImageBackground,
-  TouchableOpacity,
+  TouchableHighlight,
   FlatList
 } from 'react-native';
 import { fetchXml } from './DataSource';
@@ -54,7 +54,7 @@ class AllPodcastsScreen extends Component {
         <FlatList
           data={feedData}
           renderItem={({item}) =>
-            <TouchableOpacity onPress={() => navigate('PodcastDetail', { xmlData: item })} >
+            <TouchableHighlight onPress={() => navigate('PodcastDetail', { xmlData: item })} >
               <View style={styles.buttonContainer} >
                 <Image
                 style={styles.image}
@@ -65,7 +65,7 @@ class AllPodcastsScreen extends Component {
                   <Text style={styles.podcastAuthor}>{item.rss.channel[0]["itunes:author"][0]}</Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
           }
           keyExtractor={item => item.rss.channel[0].title[0]}
         />

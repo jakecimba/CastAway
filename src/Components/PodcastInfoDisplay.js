@@ -17,7 +17,7 @@ export default PodcastInfoDisplay = ({generalInfoFeed}) =>
       </View>
     </View>
     <View style={styles.descriptionContainer}>
-      <Text style={styles.description}>{generalInfoFeed["description"][0]}</Text>
+      <Text numberOfLines={5} ellipsizeMode={'tail'} style={styles.description}>{generalInfoFeed["description"][0]}</Text>
     </View>
   </View>
 
