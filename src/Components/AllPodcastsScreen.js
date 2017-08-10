@@ -18,7 +18,8 @@ class AllPodcastsScreen extends Component {
   static navigationOptions = {
     title: 'All Podcasts',
     headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
-    headerStyle: {backgroundColor: 'black', height: 74}
+    headerStyle: {backgroundColor: 'black', height: 74},
+    headerBackTitle: null,
   };
   
   componentWillMount() {

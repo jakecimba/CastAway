@@ -2,55 +2,102 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableOpacity
+  TouchableHighlight
 } from 'react-native';
 import { EpisodeDetailModal } from './EpisodeDetailModal';
+var striptags = require('striptags');
 
 export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisode}) => {
+  let description = String(item.description);
+  description = striptags(description, [] , "");
+
+  function formatDuration(duration) {
+    var i = 0;
+    while (duration[i] == '0' || duration[i] == ':') {
+      duration = duration.substring(1, duration.length)
+    };
+    return duration;
+  }
+
+
   return (
-    <TouchableOpacity onPress={() => {
-        onPressItem(item.title)
-        navigateToEpisode(item)
-      }}>
-      <View style={(selected == true) ? styles.buttonPlaying : styles.buttonNotPlaying}>
-        <Text style={styles.buttonText}>{item.title}</Text>
-        <View style={styles.modal}>
-          <EpisodeDetailModal info={item}/>
+    <View style={styles.background}>
+      <TouchableHighlight onPress={() => {
+          onPressItem(item.title)
+          navigateToEpisode(item)
+        }}>
+        <View style={styles.button}>
+          <View style={styles.leftColumn}>
+            <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
+            <Text style={styles.duration}>{formatDuration(String(item["itunes:duration"]))}</Text>
+            <Text style={styles.description} numberOfLines={2} ellipsizeMode={'tail'}>{description}</Text>
+          </View>
+          <View style={styles.modal}>
+              <EpisodeDetailModal info={item}/>
+            </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableHighlight>
+    </View>
   )
 }
 
 const styles = {
-  buttonNotPlaying: {
-    height: 50,
-    marginBottom: 1,
-    backgroundColor: '#2196F3',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+  background: {
+    backgroundColor: 'rgb(76, 76, 76)'
   },
-  buttonPlaying: {
-    height: 50,
+  button: {
+    height: 153,
     marginBottom: 1,
-    backgroundColor: 'grey',
+    backgroundColor: 'black',
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: 'row'
   },
-  buttonText: {
-    paddingLeft: 15,
-    paddingTop: 7,
-    paddingBottom: 5,
-    color: 'white',
-    height: 50,
-    width: 300
+  buttonTextPlaying: {
+    top: 28,
+    width: 310,
+    lineHeight: 22,
+    maxHeight: 44,
+    paddingLeft: 18,
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    color: 'rgb(0, 173, 211)'
+  },
+  buttonTextNotPlaying: {
+    top: 28,
+    width: 310,
+    lineHeight: 22,
+    maxHeight: 44,
+    paddingLeft: 18,
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    color: 'white'
+  },
+  leftColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   modal: {
-    paddingRight: 10,
+    left: 10
+  },
+  duration: {
+    color: 'rgb(155, 155, 155)',
+    left: 18,
+    fontSize: 12,
+    lineHeight: 12,
+    fontFamily: 'HelveticaNeue',
+  },
+  description: {
+    color: 'white',
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 15,
+    width: 339,
+    left: 18,
+    bottom: 28,
+    lineHeight: 21,
+    height: 42
   }
 }
 
