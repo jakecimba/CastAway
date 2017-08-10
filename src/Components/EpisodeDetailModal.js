@@ -33,11 +33,13 @@ class EpisodeDetailModal extends Component {
           <Text>{description}</Text>
         </View>
         </Modal>
-          <TouchableHighlight onPress={() => {
-            this.setModalVisible(true)
-          }}>
-            <Image source={{uri: 'infoButton'}} style={styles.infoButton}/>
-          </TouchableHighlight>
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(true)
+            }}>
+              <View style={styles.infoContainer}>
+                <Image source={{uri: 'infoButton'}} style={styles.infoButton}/>
+              </View>
+            </TouchableHighlight>
       </View>
     );
   }
@@ -61,7 +63,10 @@ const styles = {
   },
   infoButton: {
     height: 22,
-    width: 22
+    width: 22,
+  },
+  infoContainer: {
+    padding: 28
   }
 }
 

@@ -27,14 +27,14 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
           navigateToEpisode(item)
         }}>
         <View style={styles.button}>
-          <View style={styles.topRow}>
+          <View style={styles.leftColumn}>
             <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
-            <View style={styles.modal}>
+            <Text style={styles.duration}>{formatDuration(String(item["itunes:duration"]))}</Text>
+            <Text style={styles.description}>{description}</Text>
+          </View>
+          <View style={styles.modal}>
               <EpisodeDetailModal info={item}/>
             </View>
-          </View>
-          <Text style={styles.duration}>{formatDuration(String(item["itunes:duration"]))}</Text>
-          <Text style={styles.description}>{description}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -50,11 +50,12 @@ const styles = {
     marginBottom: 1,
     backgroundColor: 'black',
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   buttonTextPlaying: {
-    width: 275,
+    top: 28,
+    width: 310,
+    lineHeight: 22,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
@@ -62,31 +63,37 @@ const styles = {
     color: 'rgb(0, 173, 211)'
   },
   buttonTextNotPlaying: {
-    width: 275,
+    top: 28,
+    width: 310,
+    lineHeight: 22,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
     letterSpacing: 1.4,
     color: 'white'
   },
-  topRow: {
-    top: 28,
-    flexDirection: 'row',
+  leftColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   modal: {
-    left: 64
+    left: 10
   },
   duration: {
     color: 'rgb(155, 155, 155)',
     left: 18,
+    fontSize: 12,
+    lineHeight: 12,
     fontFamily: 'HelveticaNeue',
   },
   description: {
     color: 'white',
     fontFamily: 'Montserrat-Regular',
+    fontSize: 15,
     width: 339,
     left: 18,
-    bottom: 26,
+    bottom: 28,
     lineHeight: 21,
     height: 42
   }
