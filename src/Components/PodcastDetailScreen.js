@@ -19,6 +19,7 @@ class PodcastDetailScreen extends Component {
     title: navigation.state.params.xmlData.rss.channel[0].title[0],
     headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
     headerStyle: {backgroundColor: 'black', height: 74},
+    headerTintColor: 'white'
   });
 
   componentWillMount() {
