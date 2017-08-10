@@ -5,7 +5,7 @@ import {
   Text,
   Image,
   ImageBackground,
-  TouchableOpacity,
+  TouchableHighlight,
   FlatList
 } from 'react-native';
 import { fetchXml } from './DataSource';
@@ -43,28 +43,24 @@ class AllPodcastsScreen extends Component {
   render() {
     let feedData = this.state.feedData
     
-    if (feedData.length != this.state.channels.length) {
-      return <Text> Loading </Text>
-    }
     const { navigate } = this.props.navigation;
-    console.log(feedData)
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <FlatList
           data={feedData}
           renderItem={({item}) =>
-            <TouchableOpacity onPress={() => navigate('PodcastDetail', { xmlData: item })} >
+            <TouchableHighlight onPress={() => navigate('PodcastDetail', { xmlData: item })} >
               <View style={styles.buttonContainer} >
                 <Image
                 style={styles.image}
                 source={{uri: item.rss.channel[0].image[0].url[0]}}
                 />
                 <View style={styles.textContainer}>
-                  <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0]}</Text>
+                  <Text style={styles.podcastTitle}>{item.rss.channel[0].title[0].replace("Podcast", "")}</Text>
                   <Text style={styles.podcastAuthor}>{item.rss.channel[0]["itunes:author"][0]}</Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
           }
           keyExtractor={item => item.rss.channel[0].title[0]}
         />
@@ -103,7 +99,7 @@ const styles = {
     color: 'white',
     marginBottom: 6,
     lineHeight: 24,
-    width: 200
+    width: 175
   },
   podcastAuthor: {
     fontFamily: 'Montserrat-Regular',
