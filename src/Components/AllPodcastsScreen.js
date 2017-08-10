@@ -44,11 +44,7 @@ class AllPodcastsScreen extends Component {
   render() {
     let feedData = this.state.feedData
     
-    if (feedData.length != this.state.channels.length) {
-      return <Text> Loading </Text>
-    }
     const { navigate } = this.props.navigation;
-    console.log(feedData)
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <FlatList
