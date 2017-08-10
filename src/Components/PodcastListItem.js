@@ -30,7 +30,7 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
           <View style={styles.leftColumn}>
             <Text style={(selected == true) ? styles.buttonTextPlaying : styles.buttonTextNotPlaying}>{item.title}</Text>
             <Text style={styles.duration}>{formatDuration(String(item["itunes:duration"]))}</Text>
-            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.description} numberOfLines={2} ellipsizeMode={'tail'}>{description}</Text>
           </View>
           <View style={styles.modal}>
               <EpisodeDetailModal info={item}/>
@@ -56,6 +56,7 @@ const styles = {
     top: 28,
     width: 310,
     lineHeight: 22,
+    maxHeight: 44,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
@@ -66,6 +67,7 @@ const styles = {
     top: 28,
     width: 310,
     lineHeight: 22,
+    maxHeight: 44,
     paddingLeft: 18,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
