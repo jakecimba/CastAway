@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View, Image } from 'react-native';
+import { 
+  Modal,
+  Text,
+  TouchableHighlight,
+  View,
+  Image,
+  ImageBackground
+} from 'react-native';
 var striptags = require('striptags');
 
 class EpisodeDetailModal extends Component {
@@ -16,6 +23,13 @@ class EpisodeDetailModal extends Component {
     var info = this.props.info;
     var description = String(info.description);
     description = striptags(description, [] , "");
+    function formatDuration(duration) {
+        var i = 0;
+        while (duration[i] == '0' || duration[i] == ':') {
+          duration = duration.substring(1, duration.length)
+        };
+        return duration;
+    }
     return (
       <View>
         <Modal
@@ -23,15 +37,22 @@ class EpisodeDetailModal extends Component {
           transparent={false}
           visible={this.state.modalVisible}
           >
-        <View style={styles.container}>
-          <TouchableHighlight onPress={() => {
-            this.setModalVisible(!this.state.modalVisible)
-          }}>
-            <Text style={styles.close}>X</Text>
-          </TouchableHighlight>
-          <Text>{info.title}</Text>
-          <Text>{description}</Text>
-        </View>
+        <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
+          <View style={styles.container}>
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+              <View style={styles.downContainer}>
+                <Image source={{uri: 'DownArrow'}} style={styles.close}/>
+              </View>
+            </TouchableHighlight>
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{info.title}</Text>
+              <Text style={styles.duration}>{formatDuration(String(info["itunes:duration"]))}</Text>
+              <Text style={styles.description}>{description}</Text>
+            </View>
+          </View>
+        </ImageBackground>
         </Modal>
             <TouchableHighlight onPress={() => {
               this.setModalVisible(true)
@@ -46,10 +67,42 @@ class EpisodeDetailModal extends Component {
 }
 
 const styles = {
+  downContainer: {
+    paddingLeft: 18,
+    paddingTop: 28,
+  },
+  duration: {
+    color: 'rgb(155, 155, 155)',
+    fontFamily: 'HelveticaNeue',
+    fontSize: 15,
+    paddingBottom: 6,
+  },
+  description: {
+    fontFamily: 'Montserrat-Regular',
+    color: 'white',
+    fontSize: 15,
+    width: 339
+  },
+  title: {
+    fontFamily: 'Montserrat-SemiBold',
+    color: 'white',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    paddingBottom: 6,
+    paddingTop: 22,
+    width: 319,
+  },
+  textContainer: {
+    backgroundColor: 'transparent',
+    paddingLeft: 18,
+  },
+  background: {
+    flex: 1
+  },
   close: {
-    textAlign: 'right',
-    padding: 10,
-    fontWeight: 'bold'
+    tintColor: 'white',
+    height: 22,
+    width: 22,
   },
   infoText: {
     color: 'white',
@@ -59,7 +112,7 @@ const styles = {
     padding: 10
   },
   container: {
-    padding: 15
+    flexDirection: 'column'
   },
   infoButton: {
     height: 22,
