@@ -33,8 +33,8 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
             <Text style={styles.description} numberOfLines={2} ellipsizeMode={'tail'}>{description}</Text>
           </View>
           <View style={styles.modal}>
-              <EpisodeDetailModal info={item}/>
-            </View>
+            <EpisodeDetailModal info={item}/>
+          </View>
         </View>
       </TouchableHighlight>
     </View>
