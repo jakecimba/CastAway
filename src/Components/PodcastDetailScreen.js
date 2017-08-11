@@ -28,7 +28,10 @@ class PodcastDetailScreen extends Component {
   }
 
   navigateToEpisode(episode) {
-    this.props.navigation.navigate('Episode', { episode: episode, title: this.props.navigation.state.params.xmlData.rss.channel[0].title[0] })
+    console.log(this.props.navigation.state.params.xmlData.rss.channel[0])
+    var author = this.props.navigation.state.params.xmlData.rss.channel[0]["itunes:author"][0]
+    var title = this.props.navigation.state.params.xmlData.rss.channel[0].title[0]
+    this.props.navigation.navigate('Episode', { episode: episode, title: title, author: author})
   }
 
 

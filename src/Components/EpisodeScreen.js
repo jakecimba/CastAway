@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { AudioController } from './AudioController';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
-var striptags = require('striptags');
 var moment = require('moment');
 
 class EpisodeScreen extends React.Component {
@@ -21,19 +20,17 @@ class EpisodeScreen extends React.Component {
 
   render () {
     const { episode } = this.props.navigation.state.params;
+    var podcastTitle = this.props.navigation.state.params.title;
+    var author = this.props.navigation.state.params.author;
     let feedMp3 = episode.enclosure[0]["$"].url.replace("https", "http");
-    let imageUrl = episode['itunes:image'][0]["$"].href;
-    let description = String(episode.description);
-    description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
-    console.log(episode)
 
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <View style={styles.container} >
-          <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
-          <AudioController mp3={feedMp3} duration={dur} podcastTitle={this.props.navigation.state.params.title} episode={episode.title}/>
+          <ImageDescriptionButton episode={episode} podcastTitle={podcastTitle} author={author} duration={durString}/>
+          <AudioController mp3={feedMp3} duration={dur} podcastTitle={podcastTitle} episode={episode.title}/>
         </View>
       </ImageBackground>
     );
