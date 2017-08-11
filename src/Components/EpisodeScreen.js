@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Text,
   View,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
 import { AudioController } from './AudioController';
 import { ImageDescriptionButton } from './ImageDescriptionButton';
@@ -11,7 +12,11 @@ var moment = require('moment');
 
 class EpisodeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.episode.title}`,
+    title: `${navigation.state.params.title}`,
+    headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
+    headerStyle: {backgroundColor: 'black', height: 74},
+    headerBackTitle: null,
+    headerTintColor: 'white'
   });
 
   render () {
@@ -22,23 +27,29 @@ class EpisodeScreen extends React.Component {
     description = striptags(description, [] , "");
     let durString = String(episode["itunes:duration"]);
     dur = moment.duration(durString).asSeconds();
+    console.log(episode)
 
     return (
-      <View style={styles.container} >
-        <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
-        <AudioController mp3={feedMp3} duration={dur} />
-      </View>
+      <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
+        <View style={styles.container} >
+          <ImageDescriptionButton episodeDescription={description} imageLink={imageUrl} />
+          <AudioController mp3={feedMp3} duration={dur} podcastTitle={this.props.navigation.state.params.title} episode={episode.title}/>
+        </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = {
+  background: {
+    flex: 1
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20
+    margin: 18
   }
 }
 

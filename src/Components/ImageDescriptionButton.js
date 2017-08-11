@@ -32,14 +32,14 @@ class ImageDescriptionButton extends React.Component {
 
 const styles = {
   button: {
-    height: 300,
-    width: 300,
+    height: 339,
+    width: 339,
     margin: 1,
     backgroundColor: '#696969',
   },
   image: {
-    width: 300,
-    height: 300
+    width: 339,
+    height: 339
   },
   text: {
     margin: 10,
