@@ -45,6 +45,11 @@ class AudioController extends React.Component {
     this.setState({
       time: this.state.time + 1
     });
+    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
+        this.end()
+    } else if ( this.state.time == this.props.duration ) {
+        this.reset()
+    }
   }
 
   addTime(seconds) {
@@ -100,15 +105,8 @@ class AudioController extends React.Component {
   }
 
   sliderAction(val) {
-    if (this.state.time == 0) {
-      this.seekAudio(val);
-      this.addTime(val);
-      ReactNativeAudioStreaming.seekToTime(val);
-      this.setState({time: val}); 
-    } else {
-      ReactNativeAudioStreaming.seekToTime(val);
-      this.setState({time: val});
-    }
+    ReactNativeAudioStreaming.seekToTime(val);
+    this.setState({time: val});
   }
 
   formatTime(seconds) {
@@ -137,11 +135,6 @@ class AudioController extends React.Component {
   }
 
   render() {
-    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
-      this.end();
-    } else if ( this.state.time == this.props.duration ) {
-      this.reset();
-    }
     let buttonStyle = this.state.isMp3Playing ? 'pauseButton' : 'playButton';
     var skipTime = 15;
     var timeElapsed = this.formatTime(this.state.time);
@@ -196,9 +189,6 @@ class AudioController extends React.Component {
           <TouchableOpacity onPress={() => {
             if ( this.state.time + skipTime >= this.props.duration ) {
               this.end();
-            } else if (this.state.time == 0) {
-              this.seekAudio(skipTime);
-              this.addTime(skipTime);
             } else {
               ReactNativeAudioStreaming.goForward(skipTime);
               this.addTime(skipTime);
