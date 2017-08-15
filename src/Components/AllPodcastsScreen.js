@@ -20,6 +20,7 @@ class AllPodcastsScreen extends Component {
     headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
     headerStyle: {backgroundColor: 'black', height: 74},
     headerBackTitle: null,
+    headerTintColor: 'white'
   };
   
   componentWillMount() {

@@ -2,8 +2,10 @@ import React from 'react';
 import {
   Text,
   View,
+  TouchableHighlight,
   TouchableOpacity,
-  Slider
+  Slider,
+  Image
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 var moment = require('moment');
@@ -140,37 +142,34 @@ class AudioController extends React.Component {
     } else if ( this.state.time == this.props.duration ) {
       this.reset();
     }
-    let buttonStatus = this.state.isMp3Playing ? "Playing" : "Paused";
-    let buttonStyle = this.state.isMp3Playing ? styles.button1 : styles.button2;
-    var skipTime = 30;
+    let buttonStyle = this.state.isMp3Playing ? 'pauseButton' : 'playButton';
+    var skipTime = 15;
     var timeElapsed = this.formatTime(this.state.time);
     var timeLeft = this.formatTime(this.props.duration - this.state.time);
 
     return (
       <View style={styles.container} >
-        <TouchableOpacity onPress={() => {
-          if (!this.state.isMp3Playing) {
-            this.resumeMP3();
-          } else {
-            this.pauseMP3();
-          }
-        }}>
-          <View  style={buttonStyle}>
-            <Text style={styles.buttonText}>{buttonStatus}</Text>
-          </View>
-        </TouchableOpacity>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.podcastTitle}>{this.props.podcastTitle.replace("Podcast", "")}</Text>
+          <Text style={styles.episode}>{this.props.episode}</Text>
+        </View>
+
         <View style={styles.timeContainer}>
           <Text style={styles.timeText}>{timeElapsed}</Text>
+          <Slider
+            style={styles.slider}
+            step={1}
+            minimumValue={0}
+            maximumValue={this.props.duration}
+            value={this.state.time}
+            onValueChange={val => this.sliderAction(val)}
+            minimumTrackTintColor={'rgb(149, 203, 216)'}
+            maximumTrackTintColor={'rgb(149, 203, 216)'}
+          />
           <Text style={styles.timeText}>-{timeLeft}</Text>
         </View>
-        <Slider
-          style={{ width: 300 }}
-          step={1}
-          minimumValue={0}
-          maximumValue={this.props.duration}
-          value={this.state.time}
-          onValueChange={val => this.sliderAction(val)}
-        />
+
         <View style={styles.skipContainer}>
           <TouchableOpacity onPress={() => {
             if ( this.state.time - skipTime < 0 ) {
@@ -179,8 +178,19 @@ class AudioController extends React.Component {
               this.skipBack(skipTime);
             }
           }}>
-            <View style={styles.skip}>
-              <Text style={styles.skipText}>Backward {skipTime}</Text>
+            <View style={styles.rewind}>
+              <Image source={{uri: 'rewind'}} style={styles.rewindImage}/>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            if (!this.state.isMp3Playing) {
+              this.resumeMP3();
+            } else {
+              this.pauseMP3();
+            }
+          }}>
+            <View  style={styles.playButton}>
+              <Image source={{uri: buttonStyle}} style={styles.playButtonImage}/>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
@@ -194,65 +204,85 @@ class AudioController extends React.Component {
               this.addTime(skipTime);
             }
           }}>
-            <View style={styles.skip}>
-              <Text style={styles.skipText}>Forward {skipTime}</Text>
+            <View style={styles.forward}>
+              <Image  source={{uri: 'fastForward'}} style={styles.forwardImage}/>
             </View>
           </TouchableOpacity>
         </View>
+
       </View>
     )
   }
 }
 
 const styles = {
+  playButtonImage: {
+    height: 79,
+    width: 79
+  },
+  playButton: {
+    height: 79,
+    width: 79
+  },
+  rewind: {
+    height: 47,
+    width: 40,
+    top: 22,
+    right: 27
+  },
+  rewindImage: {
+    height: 47,
+    width: 40
+  },
+  forward: {
+    height: 47,
+    width: 40,
+    top: 22,
+    left: 27
+  },
+  forwardImage: {
+    height: 47,
+    width: 40
+  },
+  slider: {
+    width: 271,
+  },
+  podcastTitle: {
+    color: 'white',
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 23,
+    letterSpacing: 1.6,
+    textAlign: 'center'
+  },
+  episode: {
+    color: 'rgb(155, 155, 155)',
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 18,
+    letterSpacing: 1.4,
+    textAlign: 'center'
+  },
+  textContainer: {
+    backgroundColor: 'transparent',
+    paddingTop: 26
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    margin: 20
-  },
-  button1: {
-    height: 65,
-    width: 125,
-    marginBottom: 1,
-    backgroundColor: '#2196F3',
-  },
-  button2: {
-    height: 65,
-    width: 125,
-    marginBottom: 1,
-    backgroundColor: '#696969',
-  },
-  buttonText: {
-    padding: 15,
-    fontSize: 25,
-    color: 'white',
-    textAlign: 'center',
+    justifyContent: 'space-between'
   },
   skipContainer: {
-    flex: 1,
     flexDirection: 'row',
-    margin: 10
-  },
-  skip: {
-    height: 20,
-    width: 100,
-    backgroundColor: '#2196F3',
-    marginBottom: 2
-  },
-  skipText: {
-    padding: 5,
-    fontSize: 10,
-    color: 'white',
-    textAlign: 'center'
   },
   timeContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    margin: 10,
+    flexDirection: 'row'
   },
   timeText: {
-    padding: 10,
+    color: 'rgb(155, 155, 155)',
+    backgroundColor: 'transparent',
+    fontFamily: 'HelveticaNeue',
+    fontSize: 12,
+    top: 10.5
   }
 }
 
