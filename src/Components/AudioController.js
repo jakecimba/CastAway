@@ -245,7 +245,7 @@ const styles = {
     width: 40
   },
   slider: {
-    width: 271,
+    width: 249,
   },
   podcastTitle: {
     color: 'white',
@@ -275,14 +275,17 @@ const styles = {
     flexDirection: 'row',
   },
   timeContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'stretch'
   },
   timeText: {
     color: 'rgb(155, 155, 155)',
     backgroundColor: 'transparent',
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
-    top: 10.5
+    top: 10.5,
+    textAlign: 'center',
+    width: 45
   }
 }
 
