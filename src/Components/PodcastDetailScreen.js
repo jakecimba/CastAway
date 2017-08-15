@@ -19,7 +19,8 @@ class PodcastDetailScreen extends Component {
     title: navigation.state.params.xmlData.rss.channel[0].title[0],
     headerTitleStyle: {color: 'white', fontSize: 18, fontFamily: 'Montserrat-SemiBold', letterSpacing: 1.4},
     headerStyle: {backgroundColor: 'black', height: 74},
-    headerTintColor: 'white'
+    headerTintColor: 'white',
+    headerBackTitle: null,
   });
 
   componentWillMount() {
@@ -27,7 +28,9 @@ class PodcastDetailScreen extends Component {
   }
 
   navigateToEpisode(episode) {
-    this.props.navigation.navigate('Episode', { episode: episode })
+    var author = this.props.navigation.state.params.xmlData.rss.channel[0]["itunes:author"][0]
+    var title = this.props.navigation.state.params.xmlData.rss.channel[0].title[0]
+    this.props.navigation.navigate('Episode', { episode: episode, title: title, author: author})
   }
 
 
