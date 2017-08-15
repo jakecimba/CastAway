@@ -245,7 +245,7 @@ const styles = {
     width: 40
   },
   slider: {
-    width: 271,
+    width: 249,
   },
   podcastTitle: {
     color: 'white',
@@ -273,6 +273,7 @@ const styles = {
   },
   skipContainer: {
     flexDirection: 'row',
+    alignItems: 'stretch'
   },
   timeContainer: {
     flexDirection: 'row'
@@ -282,7 +283,9 @@ const styles = {
     backgroundColor: 'transparent',
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
-    top: 10.5
+    top: 10.5,
+    textAlign: 'center',
+    width: 45
   }
 }
 
