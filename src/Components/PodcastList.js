@@ -30,11 +30,12 @@ class PodcastList extends PureComponent {
     <PodcastListItem item={item}
       onPressItem={this._onPressItem}
       navigateToEpisode={this.props.navigateToEpisode}
-      selected={!!this.state.selected.get(item.title)}
+      selected={!!this.state.selected.get(item.title) || (previousTitle == item.title)}
     />
   )
 
   render() {
+    console.log("PreviousTitle", previousTitle)
     return (
       <View style={styles.container}>
         <FlatList
