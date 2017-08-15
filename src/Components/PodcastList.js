@@ -35,7 +35,6 @@ class PodcastList extends PureComponent {
   )
 
   render() {
-    console.log("PreviousTitle", previousTitle)
     return (
       <View style={styles.container}>
         <FlatList
