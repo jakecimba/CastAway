@@ -45,6 +45,7 @@ class AudioController extends React.Component {
     this.setState({
       time: this.state.time + 1
     });
+    this.checkForEnd(this.state.time);
   }
 
   addTime(seconds) {
@@ -55,6 +56,14 @@ class AudioController extends React.Component {
     ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
     ReactNativeAudioStreaming.pause();
     ReactNativeAudioStreaming.seekToTime(seconds);
+  }
+  
+  checkForEnd(currentTime) {
+    if ( currentTime == this.props.duration && this.state.isMp3Playing ) {
+        this.end()
+    } else if ( currentTime == this.props.duration ) {
+        this.reset()
+    }
   }
   
   end() {
@@ -99,16 +108,13 @@ class AudioController extends React.Component {
     });
   }
 
-  sliderAction(val) {
-    if (this.state.time == 0) {
-      this.seekAudio(val);
-      this.addTime(val);
-      ReactNativeAudioStreaming.seekToTime(val);
-      this.setState({time: val}); 
-    } else {
-      ReactNativeAudioStreaming.seekToTime(val);
-      this.setState({time: val});
-    }
+  sliderChange(val) {
+    ReactNativeAudioStreaming.seekToTime(val);
+    this.setState({time: val});
+  }
+
+  sliderComplete(val) {
+    this.checkForEnd(val);
   }
 
   formatTime(seconds) {
@@ -137,11 +143,6 @@ class AudioController extends React.Component {
   }
 
   render() {
-    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
-      this.end();
-    } else if ( this.state.time == this.props.duration ) {
-      this.reset();
-    }
     let buttonStyle = this.state.isMp3Playing ? 'pauseButton' : 'playButton';
     var skipTime = 15;
     var timeElapsed = this.formatTime(this.state.time);
@@ -163,7 +164,8 @@ class AudioController extends React.Component {
             minimumValue={0}
             maximumValue={this.props.duration}
             value={this.state.time}
-            onValueChange={val => this.sliderAction(val)}
+            onValueChange={val => this.sliderChange(val)}
+            onSlidingComplete={val => this.sliderComplete(val)}
             minimumTrackTintColor={'rgb(149, 203, 216)'}
             maximumTrackTintColor={'rgb(149, 203, 216)'}
           />
@@ -196,9 +198,6 @@ class AudioController extends React.Component {
           <TouchableOpacity onPress={() => {
             if ( this.state.time + skipTime >= this.props.duration ) {
               this.end();
-            } else if (this.state.time == 0) {
-              this.seekAudio(skipTime);
-              this.addTime(skipTime);
             } else {
               ReactNativeAudioStreaming.goForward(skipTime);
               this.addTime(skipTime);
@@ -245,7 +244,7 @@ const styles = {
     width: 40
   },
   slider: {
-    width: 271,
+    width: 249,
   },
   podcastTitle: {
     color: 'white',
@@ -275,14 +274,17 @@ const styles = {
     flexDirection: 'row',
   },
   timeContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'stretch'
   },
   timeText: {
     color: 'rgb(155, 155, 155)',
     backgroundColor: 'transparent',
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
-    top: 10.5
+    top: 10.5,
+    textAlign: 'center',
+    width: 45
   }
 }
 
