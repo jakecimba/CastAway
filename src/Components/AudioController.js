@@ -48,16 +48,6 @@ class AudioController extends React.Component {
     this.checkForEnd(this.state.time);
   }
 
-  addTime(seconds) {
-    this.setState({time: this.state.time + seconds});
-  }
-
-  seekAudio(seconds) {
-    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
-    ReactNativeAudioStreaming.pause();
-    ReactNativeAudioStreaming.seekToTime(seconds);
-  }
-  
   checkForEnd(currentTime) {
     if ( currentTime == this.props.duration && this.state.isMp3Playing ) {
         this.end()
@@ -65,17 +55,12 @@ class AudioController extends React.Component {
         this.reset()
     }
   }
-  
+
   end() {
     ReactNativeAudioStreaming.seekToTime(0);
     ReactNativeAudioStreaming.pause();
     clearInterval(this.timerID);
     this.setState({time: 0, isMp3Playing: false});
-  }
-
-  skipBack(seconds) {
-    ReactNativeAudioStreaming.goBack(seconds);
-    this.setState({time: this.state.time - seconds});
   }
 
   reset() {
@@ -106,6 +91,16 @@ class AudioController extends React.Component {
         this.setState({time: parseInt(info.progress.toFixed(0))});
       }
     });
+  }
+
+  skipForward(seconds) {
+    ReactNativeAudioStreaming.goForward(seconds);
+    this.setState({time: this.state.time + seconds});
+  }
+
+  skipBack(seconds) {
+    ReactNativeAudioStreaming.goBack(seconds);
+    this.setState({time: this.state.time - seconds});
   }
 
   sliderChange(val) {
@@ -199,8 +194,7 @@ class AudioController extends React.Component {
             if ( this.state.time + skipTime >= this.props.duration ) {
               this.end();
             } else {
-              ReactNativeAudioStreaming.goForward(skipTime);
-              this.addTime(skipTime);
+              this.skipForward(skipTime);
             }
           }}>
             <View style={styles.forward}>
