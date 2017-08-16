@@ -4,7 +4,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { AudioController } from './AudioController';
-import { ImageDescriptionButton } from './ImageDescriptionButton';
+import { ImageDescriptionCarousel } from './ImageDescriptionCarousel';
 var moment = require('moment');
 
 class EpisodeScreen extends React.Component {
@@ -25,7 +25,7 @@ class EpisodeScreen extends React.Component {
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <View style={styles.container} >
-          <ImageDescriptionButton episode={navigation.episode} podcastTitle={navigation.title} author={navigation.author} duration={durationString}/>
+          <ImageDescriptionCarousel episode={navigation.episode} podcastTitle={navigation.title} author={navigation.author} duration={durationString}/>
           <AudioController mp3={feedMp3} duration={durationAsSeconds} podcastTitle={navigation.title} episodeTitle={navigation.episode.title}/>
         </View>
       </ImageBackground>

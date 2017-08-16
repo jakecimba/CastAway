@@ -4,6 +4,7 @@ import {
   View,
   Image
 } from 'react-native';
+import {palette} from './Palette';
 
 export default PodcastInfoDisplay = ({generalInfoFeed}) =>
   <View>
@@ -64,7 +65,7 @@ const styles = {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
     letterSpacing: 0.2,
-    color: 'rgb(208, 208, 208)',
+    color: palette.pinkishGrey,
   },
 }
 

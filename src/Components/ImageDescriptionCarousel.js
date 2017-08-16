@@ -5,10 +5,11 @@ import {
   Image,
   ScrollView
 } from 'react-native';
-var striptags = require('striptags');
 import Carousel from 'react-native-looped-carousel';
+import {palette} from './Palette';
+var striptags = require('striptags');
 
-class ImageDescriptionButton extends Component {
+class ImageDescriptionCarousel extends Component {
 
   render() {
     let image = this.props.episode['itunes:image'][0]["$"].href;
@@ -104,7 +105,7 @@ const styles = {
   author: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
-    color: 'rgb(155, 155, 155)',
+    color: palette.pinkishGrey,
     letterSpacing: 0.2,
     paddingBottom: 6
   },
@@ -112,9 +113,9 @@ const styles = {
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
     lineHeight: 14,
-    color: 'rgb(155, 155, 155)',
+    color: palette.warmGrey,
     paddingBottom: 18
   }
 }
 
-export { ImageDescriptionButton };
+export { ImageDescriptionCarousel };

@@ -9,6 +9,7 @@ import {
   FlatList
 } from 'react-native';
 import { fetchXml } from './DataSource';
+import {palette} from './Palette';
 
 class AllPodcastsScreen extends Component {
   state = {
@@ -79,7 +80,7 @@ const styles = {
     height: 123.2,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'rgb(53, 53, 53)',
+    backgroundColor: palette.blackTwo,
     marginBottom: 3.8
   },
   textContainer: {
@@ -107,7 +108,7 @@ const styles = {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
     letterSpacing: 0.2,
-    color: 'rgb(208, 208, 208)',
+    color: palette.pinkishGrey,
   },
 }
 

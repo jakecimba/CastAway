@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground
 } from 'react-native';
+import {palette} from './Palette';
 var striptags = require('striptags');
 
 class EpisodeDetailModal extends Component {
@@ -74,7 +75,7 @@ const styles = {
     paddingTop: 28,
   },
   duration: {
-    color: 'rgb(155, 155, 155)',
+    color: palette.warmGrey,
     fontFamily: 'HelveticaNeue',
     fontSize: 15,
     paddingBottom: 6,
