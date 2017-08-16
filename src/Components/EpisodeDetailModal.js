@@ -29,7 +29,7 @@ class EpisodeDetailModal extends Component {
 
   render() {
     var info = this.props.info;
-    var description = String(info.description);
+    var description = String(info.description).replace("&nbsp", "");
     description = striptags(description, [] , "");
 
     return (
