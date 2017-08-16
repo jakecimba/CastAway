@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableHighlight,
   TouchableOpacity,
   Slider,
   Image
@@ -48,16 +47,6 @@ class AudioController extends React.Component {
     this.checkForEnd(this.state.time);
   }
 
-  addTime(seconds) {
-    this.setState({time: this.state.time + seconds});
-  }
-
-  seekAudio(seconds) {
-    ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
-    ReactNativeAudioStreaming.pause();
-    ReactNativeAudioStreaming.seekToTime(seconds);
-  }
-  
   checkForEnd(currentTime) {
     if ( currentTime == this.props.duration && this.state.isMp3Playing ) {
         this.end()
@@ -65,17 +54,12 @@ class AudioController extends React.Component {
         this.reset()
     }
   }
-  
+
   end() {
     ReactNativeAudioStreaming.seekToTime(0);
     ReactNativeAudioStreaming.pause();
     clearInterval(this.timerID);
     this.setState({time: 0, isMp3Playing: false});
-  }
-
-  skipBack(seconds) {
-    ReactNativeAudioStreaming.goBack(seconds);
-    this.setState({time: this.state.time - seconds});
   }
 
   reset() {
@@ -108,6 +92,16 @@ class AudioController extends React.Component {
     });
   }
 
+  skipForward(seconds) {
+    ReactNativeAudioStreaming.goForward(seconds);
+    this.setState({time: this.state.time + seconds});
+  }
+
+  skipBack(seconds) {
+    ReactNativeAudioStreaming.goBack(seconds);
+    this.setState({time: this.state.time - seconds});
+  }
+
   sliderChange(val) {
     ReactNativeAudioStreaming.seekToTime(val);
     this.setState({time: val});
@@ -122,23 +116,19 @@ class AudioController extends React.Component {
     var minutes = Math.floor((seconds - (hours * 3600)) / 60);
     var seconds = seconds - (hours * 3600) - (minutes * 60);
     var time = ""
-
     if (hours > 0) {
       time += hours+":"
     }
-
     if (minutes < 10 && time != "") {
       time += "0"+minutes+":"
     } else {
       time += minutes+":"
     }
-
     if (seconds < 10) {
       time += "0"+seconds
     } else {
       time += seconds
     }
-
     return time
   }
 
@@ -153,7 +143,7 @@ class AudioController extends React.Component {
 
         <View style={styles.textContainer}>
           <Text style={styles.podcastTitle}>{this.props.podcastTitle.replace("Podcast", "")}</Text>
-          <Text style={styles.episode}>{this.props.episode}</Text>
+          <Text style={styles.episode}>{this.props.episodeTitle}</Text>
         </View>
 
         <View style={styles.timeContainer}>
@@ -181,7 +171,7 @@ class AudioController extends React.Component {
             }
           }}>
             <View style={styles.rewind}>
-              <Image source={{uri: 'rewind'}} style={styles.rewindImage}/>
+              <Image source={{uri: 'rewind'}} style={styles.skipImage}/>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
@@ -191,20 +181,17 @@ class AudioController extends React.Component {
               this.pauseMP3();
             }
           }}>
-            <View  style={styles.playButton}>
-              <Image source={{uri: buttonStyle}} style={styles.playButtonImage}/>
-            </View>
+            <Image source={{uri: buttonStyle}} style={styles.playButtonImage}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             if ( this.state.time + skipTime >= this.props.duration ) {
               this.end();
             } else {
-              ReactNativeAudioStreaming.goForward(skipTime);
-              this.addTime(skipTime);
+              this.skipForward(skipTime);
             }
           }}>
             <View style={styles.forward}>
-              <Image  source={{uri: 'fastForward'}} style={styles.forwardImage}/>
+              <Image  source={{uri: 'fastForward'}} style={styles.skipImage}/>
             </View>
           </TouchableOpacity>
         </View>
@@ -219,27 +206,15 @@ const styles = {
     height: 79,
     width: 79
   },
-  playButton: {
-    height: 79,
-    width: 79
-  },
   rewind: {
-    height: 47,
-    width: 40,
     top: 22,
     right: 27
   },
-  rewindImage: {
-    height: 47,
-    width: 40
-  },
   forward: {
-    height: 47,
-    width: 40,
     top: 22,
     left: 27
   },
-  forwardImage: {
+  skipImage: {
     height: 47,
     width: 40
   },

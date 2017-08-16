@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  TouchableOpacity,
   Image,
-  Dimensions,
   ScrollView
 } from 'react-native';
 var striptags = require('striptags');

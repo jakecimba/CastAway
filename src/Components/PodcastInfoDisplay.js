@@ -21,7 +21,6 @@ export default PodcastInfoDisplay = ({generalInfoFeed}) =>
     </View>
   </View>
 
-
 const styles = {
   description: {
     fontSize: 15,

@@ -19,7 +19,6 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
     return duration;
   }
 
-
   return (
     <View style={styles.background}>
       <TouchableHighlight onPress={() => {

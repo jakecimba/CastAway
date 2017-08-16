@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  Text,
   View,
-  Image,
   ImageBackground
 } from 'react-native';
 import { AudioController } from './AudioController';
@@ -24,13 +22,13 @@ class EpisodeScreen extends React.Component {
     var author = this.props.navigation.state.params.author;
     let feedMp3 = episode.enclosure[0]["$"].url.replace("https", "http");
     let durString = String(episode["itunes:duration"]);
-    dur = moment.duration(durString).asSeconds();
+    let durAsSeconds = moment.duration(durString).asSeconds();
 
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <View style={styles.container} >
           <ImageDescriptionButton episode={episode} podcastTitle={podcastTitle} author={author} duration={durString}/>
-          <AudioController mp3={feedMp3} duration={dur} podcastTitle={podcastTitle} episode={episode.title}/>
+          <AudioController mp3={feedMp3} duration={durAsSeconds} podcastTitle={podcastTitle} episodeTitle={episode.title}/>
         </View>
       </ImageBackground>
     );
