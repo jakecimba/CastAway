@@ -9,12 +9,11 @@ import {PodcastListItem} from './PodcastListItem';
 var previousTitle;
 
 class PodcastList extends PureComponent {
-
   state = {selected: (new Map(): Map<string, boolean>)}
 
-  _keyExtractor = (item, index) => item.title
+  keyExtractor = (item, index) => item.title
 
-  _onPressItem = (title: string) => {
+  onPressItem = (title: string) => {
     this.setState((state) => {
       if (state.selected.has(previousTitle)) {
         state.selected.delete(previousTitle)
@@ -26,9 +25,9 @@ class PodcastList extends PureComponent {
     })
   }
 
-  _renderItem = ({item}) => (
+  renderItem = ({item}) => (
     <PodcastListItem item={item}
-      onPressItem={this._onPressItem}
+      onPressItem={this.onPressItem}
       navigateToEpisode={this.props.navigateToEpisode}
       selected={!!this.state.selected.get(item.title) || (previousTitle == item.title)}
     />
@@ -40,8 +39,8 @@ class PodcastList extends PureComponent {
         <FlatList
           data={this.props.items}
           extraData={this.state}
-          keyExtractor={this._keyExtractor}
-          renderItem={this._renderItem}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderItem}
         />
       </View>
     )
