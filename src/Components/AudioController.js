@@ -45,11 +45,7 @@ class AudioController extends React.Component {
     this.setState({
       time: this.state.time + 1
     });
-    if ( this.state.time == this.props.duration && this.state.isMp3Playing ) {
-        this.end()
-    } else if ( this.state.time == this.props.duration ) {
-        this.reset()
-    }
+    this.checkForEnd(this.state.time);
   }
 
   addTime(seconds) {
@@ -60,6 +56,14 @@ class AudioController extends React.Component {
     ReactNativeAudioStreaming.play(this.props.mp3, {showIniOSMediaCenter: true});
     ReactNativeAudioStreaming.pause();
     ReactNativeAudioStreaming.seekToTime(seconds);
+  }
+  
+  checkForEnd(currentTime) {
+    if ( currentTime == this.props.duration && this.state.isMp3Playing ) {
+        this.end()
+    } else if ( currentTime == this.props.duration ) {
+        this.reset()
+    }
   }
   
   end() {
@@ -104,9 +108,13 @@ class AudioController extends React.Component {
     });
   }
 
-  sliderAction(val) {
+  sliderChange(val) {
     ReactNativeAudioStreaming.seekToTime(val);
     this.setState({time: val});
+  }
+
+  sliderComplete(val) {
+    this.checkForEnd(val);
   }
 
   formatTime(seconds) {
@@ -156,7 +164,8 @@ class AudioController extends React.Component {
             minimumValue={0}
             maximumValue={this.props.duration}
             value={this.state.time}
-            onValueChange={val => this.sliderAction(val)}
+            onValueChange={val => this.sliderChange(val)}
+            onSlidingComplete={val => this.sliderComplete(val)}
             minimumTrackTintColor={'rgb(149, 203, 216)'}
             maximumTrackTintColor={'rgb(149, 203, 216)'}
           />
