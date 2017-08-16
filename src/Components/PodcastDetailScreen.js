@@ -3,9 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import {
   Text,
   View,
-  FlatList,
   ImageBackground,
-  TouchableOpacity
 } from 'react-native';
 import { fetchXml } from './DataSource';
 import {PodcastList} from './PodcastList';
@@ -32,7 +30,6 @@ class PodcastDetailScreen extends Component {
     var title = this.props.navigation.state.params.xmlData.rss.channel[0].title[0]
     this.props.navigation.navigate('Episode', { episode: episode, title: title, author: author})
   }
-
 
   render() {
     if (!this.state.feedData) {

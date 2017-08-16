@@ -19,17 +19,19 @@ class EpisodeDetailModal extends Component {
     this.setState({modalVisible: visible});
   }
 
+  formatDuration(duration) {
+    var i = 0;
+    while (duration[i] == '0' || duration[i] == ':') {
+      duration = duration.substring(1, duration.length)
+    };
+    return duration;
+  }
+
   render() {
     var info = this.props.info;
     var description = String(info.description);
     description = striptags(description, [] , "");
-    function formatDuration(duration) {
-        var i = 0;
-        while (duration[i] == '0' || duration[i] == ':') {
-          duration = duration.substring(1, duration.length)
-        };
-        return duration;
-    }
+
     return (
       <View>
         <Modal
@@ -48,7 +50,7 @@ class EpisodeDetailModal extends Component {
             </TouchableHighlight>
             <View style={styles.textContainer}>
               <Text style={styles.title}>{info.title}</Text>
-              <Text style={styles.duration}>{formatDuration(String(info["itunes:duration"]))}</Text>
+              <Text style={styles.duration}>{this.formatDuration(String(info["itunes:duration"]))}</Text>
               <Text style={styles.description}>{description}</Text>
             </View>
           </View>
