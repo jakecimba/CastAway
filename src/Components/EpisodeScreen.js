@@ -4,7 +4,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { AudioController } from './AudioController';
-import { ImageDescriptionButton } from './ImageDescriptionButton';
+import { ImageDescriptionCarousel } from './ImageDescriptionCarousel';
 var moment = require('moment');
 
 class EpisodeScreen extends React.Component {
@@ -17,18 +17,16 @@ class EpisodeScreen extends React.Component {
   });
 
   render () {
-    const { episode } = this.props.navigation.state.params;
-    var podcastTitle = this.props.navigation.state.params.title;
-    var author = this.props.navigation.state.params.author;
-    let feedMp3 = episode.enclosure[0]["$"].url.replace("https", "http");
-    let durString = String(episode["itunes:duration"]);
-    let durAsSeconds = moment.duration(durString).asSeconds();
+    var navigation = this.props.navigation.state.params;
+    let feedMp3 = navigation.episode.enclosure[0]["$"].url.replace("https", "http");
+    let durationString = String(navigation.episode["itunes:duration"]);
+    let durationAsSeconds = moment.duration(durationString).asSeconds();
 
     return (
       <ImageBackground source={{uri: 'backgroundFadeLandingPage'}} style={styles.background}>
         <View style={styles.container} >
-          <ImageDescriptionButton episode={episode} podcastTitle={podcastTitle} author={author} duration={durString}/>
-          <AudioController mp3={feedMp3} duration={durAsSeconds} podcastTitle={podcastTitle} episodeTitle={episode.title}/>
+          <ImageDescriptionCarousel episode={navigation.episode} podcastTitle={navigation.title} author={navigation.author} duration={durationString}/>
+          <AudioController mp3={feedMp3} duration={durationAsSeconds} podcastTitle={navigation.title} episodeTitle={navigation.episode.title}/>
         </View>
       </ImageBackground>
     );

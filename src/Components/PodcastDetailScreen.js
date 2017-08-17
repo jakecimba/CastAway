@@ -8,6 +8,7 @@ import {
 import { fetchXml } from './DataSource';
 import {PodcastList} from './PodcastList';
 import {PodcastInfoDisplay} from './PodcastInfoDisplay';
+import {palette} from './Palette';
 
 class PodcastDetailScreen extends Component {
   state = {
@@ -68,7 +69,7 @@ const styles = {
     fontSize: 18,
     padding: 2,
     paddingLeft: 16,
-    backgroundColor: 'rgb(149, 203, 216)'
+    backgroundColor: palette.accent
   }
 }
 

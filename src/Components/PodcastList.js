@@ -49,7 +49,8 @@ class PodcastList extends PureComponent {
 
 const styles = {
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'black'
   }
 }
 

@@ -5,14 +5,15 @@ import {
   Image,
   ScrollView
 } from 'react-native';
-var striptags = require('striptags');
 import Carousel from 'react-native-looped-carousel';
+import {palette} from './Palette';
+var striptags = require('striptags');
 
-class ImageDescriptionButton extends Component {
+class ImageDescriptionCarousel extends Component {
 
   render() {
     let image = this.props.episode['itunes:image'][0]["$"].href;
-    let description = String(this.props.episode.description);
+    let description = String(this.props.episode.description).replace("&nbsp;", " ");
     description = striptags(description, [] , "");
     function formatDuration(duration) {
         var i = 0;
@@ -48,6 +49,7 @@ class ImageDescriptionButton extends Component {
   }
 }
 
+const carouselDimension = 339;
 const styles = {
   bullet: {
     height: 7,
@@ -57,16 +59,16 @@ const styles = {
     top: 35,
   },
   container: {
-    height: 339,
-    width: 339
+    height: carouselDimension,
+    width: carouselDimension
   },
   imageContainer: {
-    height: 339,
-    width: 339,
+    height: carouselDimension,
+    width: carouselDimension,
   },
   textContainer: {
-    height: 339,
-    width: 339,
+    height: carouselDimension,
+    width: carouselDimension,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 12,
@@ -75,8 +77,8 @@ const styles = {
     backgroundColor: 'transparent'
   },
   image: {
-    width: 339,
-    height: 339
+    width: carouselDimension,
+    height: carouselDimension
   },
   description: {
     color: 'white',
@@ -103,7 +105,7 @@ const styles = {
   author: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
-    color: 'rgb(155, 155, 155)',
+    color: palette.author,
     letterSpacing: 0.2,
     paddingBottom: 6
   },
@@ -111,9 +113,9 @@ const styles = {
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
     lineHeight: 14,
-    color: 'rgb(155, 155, 155)',
+    color: palette.timeStamp,
     paddingBottom: 18
   }
 }
 
-export { ImageDescriptionButton };
+export { ImageDescriptionCarousel };

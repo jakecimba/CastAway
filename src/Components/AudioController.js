@@ -7,6 +7,7 @@ import {
   Image
 } from 'react-native';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+import {palette} from './Palette';
 var moment = require('moment');
 
 class AudioController extends React.Component {
@@ -156,8 +157,8 @@ class AudioController extends React.Component {
             value={this.state.time}
             onValueChange={val => this.sliderChange(val)}
             onSlidingComplete={val => this.sliderComplete(val)}
-            minimumTrackTintColor={'rgb(149, 203, 216)'}
-            maximumTrackTintColor={'rgb(149, 203, 216)'}
+            minimumTrackTintColor={palette.accent}
+            maximumTrackTintColor={palette.accent}
           />
           <Text style={styles.timeText}>-{timeLeft}</Text>
         </View>
@@ -229,7 +230,7 @@ const styles = {
     textAlign: 'center'
   },
   episode: {
-    color: 'rgb(155, 155, 155)',
+    color: palette.timeStamp,
     fontFamily: 'Montserrat-Regular',
     fontSize: 18,
     letterSpacing: 1.4,
@@ -253,7 +254,7 @@ const styles = {
     alignItems: 'stretch'
   },
   timeText: {
-    color: 'rgb(155, 155, 155)',
+    color: palette.timeStamp,
     backgroundColor: 'transparent',
     fontFamily: 'HelveticaNeue',
     fontSize: 12,

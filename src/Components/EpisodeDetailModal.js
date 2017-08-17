@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground
 } from 'react-native';
+import {palette} from './Palette';
 var striptags = require('striptags');
 
 class EpisodeDetailModal extends Component {
@@ -29,7 +30,7 @@ class EpisodeDetailModal extends Component {
 
   render() {
     var info = this.props.info;
-    var description = String(info.description);
+    var description = String(info.description).replace("&nbsp;", " ");
     description = striptags(description, [] , "");
 
     return (
@@ -74,7 +75,7 @@ const styles = {
     paddingTop: 28,
   },
   duration: {
-    color: 'rgb(155, 155, 155)',
+    color: palette.timeStamp,
     fontFamily: 'HelveticaNeue',
     fontSize: 15,
     paddingBottom: 6,

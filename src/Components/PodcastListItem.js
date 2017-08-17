@@ -5,6 +5,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { EpisodeDetailModal } from './EpisodeDetailModal';
+import {palette} from './Palette';
 var striptags = require('striptags');
 
 export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisode}) => {
@@ -42,7 +43,7 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
 
 const styles = {
   background: {
-    backgroundColor: 'rgb(76, 76, 76)'
+    backgroundColor: palette.background
   },
   button: {
     height: 153,
@@ -60,7 +61,7 @@ const styles = {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
     letterSpacing: 1.4,
-    color: 'rgb(0, 173, 211)'
+    color: palette.highlightedText
   },
   buttonTextNotPlaying: {
     top: 28,
@@ -82,7 +83,7 @@ const styles = {
     left: 10
   },
   duration: {
-    color: 'rgb(155, 155, 155)',
+    color: palette.timeStamp,
     left: 18,
     fontSize: 12,
     lineHeight: 12,
