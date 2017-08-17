@@ -65,7 +65,7 @@ const styles = {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
     letterSpacing: 0.2,
-    color: palette.pinkishGrey,
+    color: palette.author,
   },
 }
 

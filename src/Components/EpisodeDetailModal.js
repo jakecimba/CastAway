@@ -75,7 +75,7 @@ const styles = {
     paddingTop: 28,
   },
   duration: {
-    color: palette.warmGrey,
+    color: palette.timeStamp,
     fontFamily: 'HelveticaNeue',
     fontSize: 15,
     paddingBottom: 6,

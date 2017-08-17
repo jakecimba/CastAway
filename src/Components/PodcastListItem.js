@@ -43,7 +43,7 @@ export default PodcastListItem = ({item, selected, onPressItem, navigateToEpisod
 
 const styles = {
   background: {
-    backgroundColor: palette.blackTwo
+    backgroundColor: palette.background
   },
   button: {
     height: 153,
@@ -61,7 +61,7 @@ const styles = {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
     letterSpacing: 1.4,
-    color: palette.turquoiseBlue
+    color: palette.highlightedText
   },
   buttonTextNotPlaying: {
     top: 28,
@@ -83,7 +83,7 @@ const styles = {
     left: 10
   },
   duration: {
-    color: palette.warmGrey,
+    color: palette.timeStamp,
     left: 18,
     fontSize: 12,
     lineHeight: 12,

@@ -230,7 +230,7 @@ const styles = {
     textAlign: 'center'
   },
   episode: {
-    color: palette.warmGrey,
+    color: palette.timeStamp,
     fontFamily: 'Montserrat-Regular',
     fontSize: 18,
     letterSpacing: 1.4,
@@ -254,7 +254,7 @@ const styles = {
     alignItems: 'stretch'
   },
   timeText: {
-    color: palette.warmGrey,
+    color: palette.timeStamp,
     backgroundColor: 'transparent',
     fontFamily: 'HelveticaNeue',
     fontSize: 12,

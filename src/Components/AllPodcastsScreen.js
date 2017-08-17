@@ -80,7 +80,7 @@ const styles = {
     height: 123.2,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: palette.blackTwo,
+    backgroundColor: palette.background,
     marginBottom: 3.8
   },
   textContainer: {
@@ -108,7 +108,7 @@ const styles = {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
     letterSpacing: 0.2,
-    color: palette.pinkishGrey,
+    color: palette.author,
   },
 }
 

@@ -105,7 +105,7 @@ const styles = {
   author: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
-    color: palette.pinkishGrey,
+    color: palette.author,
     letterSpacing: 0.2,
     paddingBottom: 6
   },
@@ -113,7 +113,7 @@ const styles = {
     fontFamily: 'HelveticaNeue',
     fontSize: 12,
     lineHeight: 14,
-    color: palette.warmGrey,
+    color: palette.timeStamp,
     paddingBottom: 18
   }
 }
