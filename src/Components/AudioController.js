@@ -157,8 +157,8 @@ class AudioController extends React.Component {
             value={this.state.time}
             onValueChange={val => this.sliderChange(val)}
             onSlidingComplete={val => this.sliderComplete(val)}
-            minimumTrackTintColor={palette.lightGreyBlue}
-            maximumTrackTintColor={palette.lightGreyBlue}
+            minimumTrackTintColor={palette.accent}
+            maximumTrackTintColor={palette.accent}
           />
           <Text style={styles.timeText}>-{timeLeft}</Text>
         </View>

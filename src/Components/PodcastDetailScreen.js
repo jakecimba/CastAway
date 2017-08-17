@@ -69,7 +69,7 @@ const styles = {
     fontSize: 18,
     padding: 2,
     paddingLeft: 16,
-    backgroundColor: palette.allEpisodes
+    backgroundColor: palette.accent
   }
 }
 
