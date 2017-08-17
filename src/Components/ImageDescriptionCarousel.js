@@ -13,7 +13,7 @@ class ImageDescriptionCarousel extends Component {
 
   render() {
     let image = this.props.episode['itunes:image'][0]["$"].href;
-    let description = String(this.props.episode.description).replace("&nbsp", "");
+    let description = String(this.props.episode.description).replace("&nbsp;", " ");
     description = striptags(description, [] , "");
     function formatDuration(duration) {
         var i = 0;
