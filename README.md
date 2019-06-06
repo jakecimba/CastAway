@@ -4,7 +4,7 @@ It was the first coding project I created. It is a simple podcast application
 that pulls data from selected podcasts on the internet and allows the user
 to play episodes and view podcast information. I used React Native to build
 the app. Below are some screenshots.<br/>
-<img src="https://github.com/jakecimba/CastAway/tree/master/imgs/all_podcasts.png" style="width: 100px;"/>
+<img src="../imgs/all_podcasts.png" width"100p"/>
 ![Screenshot](imgs/all_podcasts.png)
 ![Screenshot](imgs/the_daily.png)
 ![Screenshot](imgs/play.png)
